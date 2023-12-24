@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
         ),
         title: Text(
           'Film Flix',
-          style: AppStyle.medium,
+          style: AppStyle.mediumMerriWeather,
         ),
         actions: [
           Padding(
@@ -49,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Text(
                     'Popular',
-                    style: AppStyle.medium,
+                    style: AppStyle.mediumMerriWeather,
                   ),
                   ActionButton(
                     text: 'See more',
@@ -58,39 +58,42 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            FutureBuilder(
-              future: filmFlexApi.getPopularMovie(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('${snapshot.error}'),
-                  );
-                } else {
-                  final movieList = snapshot.data;
-                  return SizedBox(
-                    height: 280,
-                    child: ListView.separated(
-                      itemCount: movieList!.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        final popularMovie = movieList[index];
-                        return PopularMovieTile(
-                          popularMovie: popularMovie,
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return SizedBox(
-                          width: 16,
-                        );
-                      },
-                    ),
-                  );
-                }
-              },
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: FutureBuilder(
+                future: filmFlexApi.getPopularMovie(context),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text('${snapshot.error}'),
+                    );
+                  } else {
+                    final movieList = snapshot.data;
+                    return SizedBox(
+                      height: 320,
+                      child: ListView.separated(
+                        itemCount: movieList!.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          final popularMovie = movieList[index];
+                          return PopularMovieTile(
+                            popularMovie: popularMovie,
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return SizedBox(
+                            width: 16,
+                          );
+                        },
+                      ),
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),

@@ -29,7 +29,7 @@ class ActionButton extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: AppStyle.smallMullish,
+        style: AppStyle.smallestMullish,
       ),
     );
   }

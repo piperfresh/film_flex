@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:filmflex/constant/app_string.dart';
 import 'package:filmflex/core/api/api_utils.dart';
 import 'package:filmflex/model/movie_list.dart';
+import 'package:filmflex/services/message_service/snack_bar_service.dart';
+import 'package:flutter/material.dart';
 import 'package:simple_logger/simple_logger.dart';
 
 import 'api_response.dart';
@@ -17,11 +19,12 @@ class FilmFlexApi {
   //? Get Methods
   Future<ApiResponse?> get(
     String string, {
-    Map<String, dynamic>? queryParameters,
-    Map<String, dynamic>? body,
-    Map<String, dynamic>? headers,
-    String? token,
-  }) async {
+        Map<String, dynamic>? queryParameters,
+        Map<String, dynamic>? body,
+        Map<String, dynamic>? headers,
+        String? token,
+        BuildContext? context,
+      }) async {
     logger.info('Making get request to $baseUrl$string');
     try {
       final response = await dio.get(
@@ -46,6 +49,7 @@ class FilmFlexApi {
     } on DioException catch (e) {
       if (e.type == DioExceptionType.connectionError ||
           e.type == DioExceptionType.receiveTimeout) {
+        SnackBarService.errorSnackBar(context!, 'Connection error or Receive timeout');
         logger.severe('Connection error or Receive timeout');
       } else if (e.response != null) {
         print('Wow: ${e.response?.requestOptions.uri}');
@@ -101,7 +105,7 @@ class FilmFlexApi {
 
 
 
-  Future<List<PopularMovie>> getPopularMovie() async {
+  Future<List<PopularMovie>> getPopularMovie(BuildContext? context) async {
     final response = await get(
       AppString.popularMoviesEndPoint,
       headers: {
@@ -109,6 +113,7 @@ class FilmFlexApi {
         'Authorization': 'Bearer $accessToken'
       },
       queryParameters: {'api_key': apiKey},
+      context: context,
     );
     // final res = PopularMovie.fromJson(response?.data['results']);
     if (response?.data['results'] != null) {
