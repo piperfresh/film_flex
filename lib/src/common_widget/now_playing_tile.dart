@@ -4,10 +4,10 @@ import 'package:filmflex/model/movie_list.dart';
 import 'package:filmflex/src/screen/popular_movie_detail_screen.dart';
 import 'package:flutter/material.dart';
 
-class PopularMovieTile extends StatelessWidget {
+class NowPlayingMovieTile extends StatelessWidget {
   final Movie? popularMovie;
 
-  const PopularMovieTile({
+  const NowPlayingMovieTile({
     super.key,
     this.popularMovie,
   });
@@ -35,7 +35,7 @@ class PopularMovieTile extends StatelessWidget {
               ),
               child: CachedNetworkImage(
                 imageUrl:
-                    '${AppString.baseImageUrl}w500/${popularMovie?.posterPath}',
+                '${AppString.baseImageUrl}w500/${popularMovie?.posterPath}',
                 imageBuilder: (context, imageProvider) => Container(
                   width: 143,
                   height: 212,
@@ -46,7 +46,7 @@ class PopularMovieTile extends StatelessWidget {
                       image: DecorationImage(image: imageProvider)),
                 ),
                 placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator()),
+                const Center(child: CircularProgressIndicator()),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
@@ -64,22 +64,22 @@ class PopularMovieTile extends StatelessWidget {
                 style: AppStyle.mediumMullish,
               ),
             ),
-            SizedBox(
-              width: 148,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Popularity:',
-                    style: AppStyle.smallestMullish.copyWith(fontSize: 14),
-                  ),
-                  Text(
-                    popularMovie!.popularity!.toStringAsFixed(1).toString(),
-                    style: AppStyle.mediumMullish,
-                  ),
-                ],
-              ),
-            ),
+            // SizedBox(
+            //   width: 148,
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Text(
+            //         'Popularity:',
+            //         style: AppStyle.smallestMullish.copyWith(fontSize: 14),
+            //       ),
+            //       Text(
+            //         popularMovie!.popularity!.toStringAsFixed(1).toString(),
+            //         style: AppStyle.mediumMullish,
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

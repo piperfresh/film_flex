@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:filmflex/constant/app_string.dart';
 import 'package:filmflex/core/api/api_utils.dart';
 import 'package:filmflex/model/movie_list.dart';
+import 'package:filmflex/model/popular_movie_cast.dart';
 import 'package:filmflex/services/message_service/snack_bar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_logger/simple_logger.dart';
@@ -104,8 +105,7 @@ class FilmFlexApi {
   // }
 
 
-
-  Future<List<PopularMovie>> getPopularMovie(BuildContext? context) async {
+  Future<List<Movie>> getPopularMovie(BuildContext? context) async {
     final response = await get(
       AppString.popularMoviesEndPoint,
       headers: {
@@ -117,11 +117,54 @@ class FilmFlexApi {
     );
     // final res = PopularMovie.fromJson(response?.data['results']);
     if (response?.data['results'] != null) {
-      final a = <PopularMovie>[];
+      final a = <Movie>[];
       response?.data['results'].forEach((v) {
-        a.add(PopularMovie.fromJson(v));
+        a.add(Movie.fromJson(v));
       });
       return a;
+    } else {
+      return [];
+    }
+  }
+
+  Future<List<PopularMovieCast>> getPopularMoviesCast(
+      BuildContext? context, String id) async {
+    final response = await get(
+      "${AppString.popularMoviesCastEndPoint}/$id/credits",
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $accessToken'
+      },
+      queryParameters: {'api_key': apiKey},
+      context: context,
+    );
+    if (response?.data['cast'] != null) {
+      final casts = <PopularMovieCast>[];
+      response?.data['cast'].forEach((cast) {
+        casts.add(PopularMovieCast.fromJson(cast));
+      });
+      return casts;
+    } else {
+      return [];
+    }
+  }
+
+  Future<List<Movie>> getNowPlayingMovies(BuildContext? context) async {
+    final response = await get(
+      AppString.nowPlayingEndPoint,
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $accessToken'
+      },
+      queryParameters: {'api_key': apiKey},
+      context: context,
+    );
+    if (response?.data['results'] != null) {
+      final nowPlayings = <Movie>[];
+      response?.data['results'].forEach((nowPlaying) {
+        nowPlayings.add(Movie.fromJson(nowPlaying));
+      });
+      return nowPlayings;
     } else {
       return [];
     }
