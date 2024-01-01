@@ -3,13 +3,16 @@ import 'package:filmflex/constant/constants.dart';
 import 'package:filmflex/model/movie_list.dart';
 import 'package:filmflex/src/screen/popular_movie_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class PopularMovieTile extends StatelessWidget {
-  final Movie? popularMovie;
+class MovieTile extends StatelessWidget {
+  final Movie? movie;
+  final bool isPopular;
 
-  const PopularMovieTile({
+  const MovieTile({
     super.key,
-    this.popularMovie,
+    this.movie,
+    this.isPopular = false,
   });
 
   @override
@@ -19,45 +22,44 @@ class PopularMovieTile extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return PopularMovieDetail(popularMovie: popularMovie!);
+            return PopularMovieDetail(popularMovie: movie!);
           }));
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 212,
-              width: 143,
-              decoration: const BoxDecoration(
+              height: 212.h,
+              width: 143.w,
+              decoration:  BoxDecoration(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(10),
+                  Radius.circular(10.w),
                 ),
               ),
               child: CachedNetworkImage(
-                imageUrl:
-                    '${AppString.baseImageUrl}w500/${popularMovie?.posterPath}',
+                imageUrl: '${AppString.baseImageUrl}w500/${movie?.posterPath}',
                 imageBuilder: (context, imageProvider) => Container(
-                  width: 143,
-                  height: 212,
+                  width: 143.w,
+                  height: 212.h,
                   decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(10),
+                      borderRadius:  BorderRadius.all(
+                        Radius.circular(10.w),
                       ),
-                      image: DecorationImage(image: imageProvider)),
+                      image: DecorationImage(image: imageProvider, fit: BoxFit.fill)),
                 ),
                 placeholder: (context, url) =>
                     const Center(child: CircularProgressIndicator()),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
-            const SizedBox(
-              height: 10,
+             SizedBox(
+              height: 10.h,
             ),
             SizedBox(
-              width: 150,
-              height: 60,
+              width: 150.w,
+              height: 60.h,
               child: Text(
-                popularMovie?.originalTitle ?? '',
+                movie?.originalTitle ?? '',
                 textAlign: TextAlign.left,
                 maxLines: 10,
                 softWrap: true,
@@ -65,21 +67,21 @@ class PopularMovieTile extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: 148,
-              child: Row(
+              width: 148.w,
+              child: isPopular ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'Popularity:',
-                    style: AppStyle.smallestMullish.copyWith(fontSize: 14),
+                    style: AppStyle.smallestMullish.copyWith(fontSize: 14.sp),
                   ),
                   Text(
-                    popularMovie!.popularity!.toStringAsFixed(1).toString(),
+                    movie!.popularity!.toStringAsFixed(1).toString(),
                     style: AppStyle.mediumMullish,
                   ),
                 ],
-              ),
-            ),
+              ) : null,
+            )
           ],
         ),
       ),

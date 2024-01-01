@@ -3,6 +3,7 @@ import 'package:filmflex/constant/constants.dart';
 import 'package:filmflex/model/movie_list.dart';
 import 'package:filmflex/src/screen/popular_movie_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NowPlayingMovieTile extends StatelessWidget {
   final Movie? popularMovie;
@@ -26,36 +27,36 @@ class NowPlayingMovieTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 212,
-              width: 143,
-              decoration: const BoxDecoration(
+              height: 212.h,
+              width: 143.w,
+              decoration:  BoxDecoration(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(10),
+                  Radius.circular(10.w),
                 ),
               ),
               child: CachedNetworkImage(
                 imageUrl:
                 '${AppString.baseImageUrl}w500/${popularMovie?.posterPath}',
                 imageBuilder: (context, imageProvider) => Container(
-                  width: 143,
-                  height: 212,
+                  width: 143.w,
+                  height: 212.h,
                   decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(10),
+                      borderRadius:  BorderRadius.all(
+                        Radius.circular(10.w),
                       ),
-                      image: DecorationImage(image: imageProvider)),
+                      image: DecorationImage(image: imageProvider, fit: BoxFit.fill)),
                 ),
                 placeholder: (context, url) =>
                 const Center(child: CircularProgressIndicator()),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
-            const SizedBox(
-              height: 10,
+             SizedBox(
+              height: 10.h,
             ),
             SizedBox(
-              width: 150,
-              height: 60,
+              width: 150.w,
+              height: 60.h,
               child: Text(
                 popularMovie?.originalTitle ?? '',
                 textAlign: TextAlign.left,

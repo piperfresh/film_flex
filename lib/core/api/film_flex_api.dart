@@ -3,6 +3,7 @@ import 'package:filmflex/constant/app_string.dart';
 import 'package:filmflex/core/api/api_utils.dart';
 import 'package:filmflex/model/movie_list.dart';
 import 'package:filmflex/model/popular_movie_cast.dart';
+import 'package:filmflex/model/search_movie.dart';
 import 'package:filmflex/services/message_service/snack_bar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_logger/simple_logger.dart';
@@ -165,6 +166,50 @@ class FilmFlexApi {
         nowPlayings.add(Movie.fromJson(nowPlaying));
       });
       return nowPlayings;
+    } else {
+      return [];
+    }
+  }
+
+  Future<List<Movie>> getUpcomingMovies(BuildContext? context) async {
+    final response = await get(
+      AppString.upcomingEndPoint,
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $accessToken'
+      },
+      queryParameters: {'api_key': apiKey},
+      context: context,
+    );
+    if (response?.data['results'] != null) {
+      final upcomingMovies = <Movie>[];
+      response?.data['results'].forEach((upcomingMovie) {
+        upcomingMovies.add(Movie.fromJson(upcomingMovie));
+      });
+      return upcomingMovies;
+    } else {
+      return [];
+    }
+  }
+
+  Future<List<Movie>> fetchMovies(
+      BuildContext? context, String? query) async {
+    final response = await get(
+      AppString.searchMovieEndPoint,
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $accessToken'
+      },
+      queryParameters: {'api_key': apiKey, 'query': query, 'page': 1},
+      context: context,
+    );
+    if (response?.data['results'] != null) {
+      final searchDetails = <Movie>[];
+      response?.data['results'].forEach((searchMovie) {
+        searchDetails.add(Movie.fromJson(searchMovie));
+      });
+      print('This is the search details: $searchDetails');
+      return searchDetails;
     } else {
       return [];
     }

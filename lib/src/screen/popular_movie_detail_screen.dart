@@ -4,10 +4,12 @@ import 'package:filmflex/core/api/film_flex_api.dart';
 import 'package:filmflex/model/movie_list.dart';
 import 'package:filmflex/src/common_widget/popular_movie_cast_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../constant/app_style.dart';
 import '../../constant/ui_helper.dart';
+import '../common_widget/details_column_widget.dart';
 
 class PopularMovieDetail extends StatelessWidget {
   final Movie popularMovie;
@@ -38,7 +40,6 @@ class PopularMovieDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Whats popping ${popularMovie.id}');
     List<String> genresNames = popularMovie.genreIds!.map((id) {
       Map<int, String> genre = genresIdDetails.firstWhere(
         (element) => element.keys.first == id,
@@ -50,20 +51,20 @@ class PopularMovieDetail extends StatelessWidget {
       body: Stack(
         children: [
           Positioned(
-            top: 20.0,
+            top: 20.0.h,
             child: SizedBox(
-              height: 310,
-              width: 440,
+              height: 280.h,
+              width: 440.w,
               child: CachedNetworkImage(
                 fit: BoxFit.fill,
                 imageUrl:
                     'https://image.tmdb.org/t/p/w500/${popularMovie.backdropPath}',
                 imageBuilder: (context, imageProvider) => Container(
-                  width: double.infinity,
-                  height: 310,
+                  width: double.infinity.w,
+                  height: 280.h,
                   decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(10),
+                      borderRadius:  BorderRadius.all(
+                        Radius.circular(10.w),
                       ),
                       image: DecorationImage(image: imageProvider)),
                 ),
@@ -74,12 +75,12 @@ class PopularMovieDetail extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 80,
-            left: 20,
-            right: 20,
+            top: 80.h,
+            left: 20.w,
+            right: 20.w,
             child: Container(
-              height: 30,
-              width: 400,
+              height: 30.h,
+              width: 400.w,
               color: Colors.transparent,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,13 +98,14 @@ class PopularMovieDetail extends StatelessWidget {
           Positioned(
             top: 280.0,
             child: Container(
-              height: 620,
-              width: 412,
+              height: 500.h,
+              width: 360.w,
               color: Colors.transparent,
               child: Container(
-                height: 620,
-                width: 412,
-                decoration: const BoxDecoration(
+                height: 500.h,
+                width: 360.w,
+                decoration:  const BoxDecoration(
+
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
@@ -113,7 +115,7 @@ class PopularMovieDetail extends StatelessWidget {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Padding(
-                    padding: const EdgeInsets.all(24),
+                    padding:  EdgeInsets.all(22.w),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -122,8 +124,8 @@ class PopularMovieDetail extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: 250,
-                              height: 92,
+                              width: 250.w,
+                              height: 92.h,
                               child: Text(
                                 popularMovie.originalTitle ?? '',
                                 textAlign: TextAlign.left,
@@ -177,7 +179,7 @@ class PopularMovieDetail extends StatelessWidget {
                                   label: Text(
                                     genre.toString(),
                                     style: AppStyle.smallestMullish.copyWith(
-                                        fontSize: 8,
+                                        fontSize: 8.sp,
                                         color: AppColors.chipTextColor),
                                   ),
                                 ),
@@ -237,7 +239,9 @@ class PopularMovieDetail extends StatelessWidget {
                             } else {
                               final casts = snapshot.data;
                               return SizedBox(
-                                height: 140,
+
+                                height: 200.h,
+                                width: 330.w,
                                 child: ListView.separated(
                                   scrollDirection: Axis.horizontal,
                                   itemCount: casts!.length,
@@ -247,8 +251,8 @@ class PopularMovieDetail extends StatelessWidget {
                                         popularMovieCast: popularMovieCast);
                                   },
                                   separatorBuilder: (context, index) {
-                                    return const SizedBox(
-                                      width: 12,
+                                    return  SizedBox(
+                                      width: 12.w,
                                     );
                                   },
                                 ),
@@ -262,36 +266,11 @@ class PopularMovieDetail extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
+
         ],
       ),
     );
   }
 }
 
-class DetailColumnWidget extends StatelessWidget {
-  const DetailColumnWidget({
-    super.key,
-    required this.popularMovie,
-    required this.firstChild,
-    required this.secondChild,
-  });
-
-  final Movie popularMovie;
-  final String firstChild;
-  final String secondChild;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          firstChild,
-          style: AppStyle.smallMullish.copyWith(color: AppColors.greyColor),
-        ),
-        Text(secondChild, style: AppStyle.smallMullish)
-      ],
-    );
-  }
-}

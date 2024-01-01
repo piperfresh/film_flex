@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UiHelper {
   /// for Vertical spacing
-  static const verticalSmallestSpacing = SizedBox(height: 10);
-  static const verticalSmallSpacing = SizedBox(height: 20);
+  static var verticalSmallestSpacing = SizedBox(height: 10.h);
+  static var verticalSmallSpacing = SizedBox(height: 20.h);
 
   /// for Horizontal spacing
-  static const horizontalSmallestSpacing = SizedBox(width: 5);
+  static var horizontalSmallestSpacing = SizedBox(width: 5.w);
 }
