@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:filmflex/constant/ui_helper.dart';
 import 'package:filmflex/model/movie_list.dart';
 import 'package:filmflex/providers/provider.dart';
@@ -23,8 +25,7 @@ class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   final movie = Movie();
-
-
+  Timer? _debounce;
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +62,13 @@ class _SearchScreenState extends State<SearchScreen> {
                   style: AppStyle.smallMullish,
                   controller: _searchController,
                   onChanged: (value) {
-                    // query.state = value;
-                    ref.read(searchQueryProvider.notifier).state = value;
-                    filmFlexApi.fetchMovies(context, value);
+                    if (_debounce?.isActive ?? false) {
+                      _debounce?.cancel();
+                    }
+                    _debounce = Timer(const Duration(milliseconds: 1000), () {
+                      ref.read(searchQueryProvider.notifier).state = value;
+                      filmFlexApi.fetchMovies(context, value);
+                    });
                   },
                   decoration: InputDecoration(
                     hintText: 'The movies',
@@ -80,7 +85,6 @@ class _SearchScreenState extends State<SearchScreen> {
               const SizedBox(
                 height: 20,
               ),
-              // _buildSearchResult(searchController: _searchController, context: context, ref: ref)
               FutureBuilder(
                 future: filmFlexApi.fetchMovies(context, query),
                 builder: (context, snapshot) {

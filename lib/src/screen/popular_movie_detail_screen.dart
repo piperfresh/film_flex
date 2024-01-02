@@ -40,6 +40,8 @@ class PopularMovieDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
     List<String> genresNames = popularMovie.genreIds!.map((id) {
       Map<int, String> genre = genresIdDetails.firstWhere(
         (element) => element.keys.first == id,
@@ -273,4 +275,3 @@ class PopularMovieDetail extends StatelessWidget {
     );
   }
 }
-
