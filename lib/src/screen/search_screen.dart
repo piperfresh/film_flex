@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:filmflex/constant/ui_helper.dart';
+import 'package:filmflex/core/extensions.dart';
 import 'package:filmflex/model/movie_list.dart';
 import 'package:filmflex/providers/provider.dart';
 import 'package:filmflex/src/common_widget/search_tile.dart';
@@ -111,11 +112,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                 final searchResult = searchResults[index];
                                 return GestureDetector(
                                     onTap: () {
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) {
-                                        return PopularMovieDetail(
-                                            popularMovie: searchResult);
-                                      }));
+                                      context.push(PopularMovieDetail(
+                                          popularMovie: searchResult), context);
                                     },
                                     child: SearchTile(movie: searchResult));
                               },
@@ -141,57 +139,4 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 }
 
-Widget _buildSearchResult(
-    {required TextEditingController searchController,
-    required BuildContext context,
-    required WidgetRef ref}) {
-  final query = ref.watch(searchQueryProvider);
 
-  return FutureBuilder(
-    future: filmFlexApi.fetchMovies(context, query),
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      } else if (snapshot.hasError) {
-        return Center(
-          child: Text('${snapshot.error}'),
-        );
-      } else {
-        final searchResults = snapshot.data;
-        return searchResults!.isNotEmpty
-            ? Expanded(
-                child: GridView.builder(
-                  itemCount: searchResults.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 5.0,
-                      mainAxisSpacing: 5.0),
-                  itemBuilder: (context, index) {
-                    final searchResult = searchResults[index];
-                    return GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return PopularMovieDetail(
-                                popularMovie: searchResult);
-                          }));
-                        },
-                        child: SearchTile(movie: searchResult));
-                  },
-                ),
-              )
-            : Expanded(
-                child: Center(
-                    child: searchController.text.isNotEmpty
-                        ? Text(
-                            'Search Not Found',
-                            style: AppStyle.bigMullish,
-                          )
-                        : null),
-              );
-      }
-    },
-  );
-}

@@ -1,11 +1,9 @@
+import 'package:filmflex/core/extensions.dart';
 import 'package:filmflex/src/common_widget/now_playing_tile.dart';
-import 'package:filmflex/src/screen/more_now_showing_movie_screen.dart';
-import 'package:filmflex/src/screen/more_popular_movie_screen.dart';
-import 'package:filmflex/src/screen/more_upcoming_movie_screen.dart';
-import 'package:filmflex/src/screen/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'screen.dart';
 
 import '../../constant/app_style.dart';
 import '../../core/api/film_flex_api.dart';
@@ -25,7 +23,7 @@ class HomeScreen extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: SvgPicture.asset(
-            'assets/icons/Menu.svg',
+            'Menu'.svg,
             fit: BoxFit.scaleDown,
           ),
         ),
@@ -36,13 +34,12 @@ class HomeScreen extends StatelessWidget {
         actions: [
           GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SearchScreen()));
+              context.push(SearchScreen(), context);
             },
             child: Padding(
               padding: const EdgeInsets.all(5.0),
               child: SvgPicture.asset(
-                'assets/icons/search_icon.svg',
+                'search_icon'.svg,
                 height: 20.h,
                 width: 20.h,
                 fit: BoxFit.scaleDown,
@@ -52,7 +49,7 @@ class HomeScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SvgPicture.asset(
-              'assets/icons/Notif.svg',
+              'Notif'.svg,
               fit: BoxFit.scaleDown,
             ),
           ),
@@ -78,10 +75,7 @@ class HomeScreen extends StatelessWidget {
                     ActionButton(
                       text: 'See more',
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return MoreNowShowingMovieScreen();
-                        }));
+                        context.push(MoreNowShowingMovieScreen(), context);
                       },
                     )
                   ],
@@ -142,10 +136,7 @@ class HomeScreen extends StatelessWidget {
                     ActionButton(
                       text: 'See more',
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return MorePopularMovieScreen();
-                        }));
+                        context.push(MorePopularMovieScreen(), context);
                       },
                     )
                   ],
@@ -207,10 +198,7 @@ class HomeScreen extends StatelessWidget {
                     ActionButton(
                       text: 'See more',
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return MoreUpcomingMovieScreen();
-                        }));
+                        context.push(MoreUpcomingMovieScreen(), context);
                       },
                     )
                   ],

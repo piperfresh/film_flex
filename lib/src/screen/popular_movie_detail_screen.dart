@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:filmflex/constant/app_colors.dart';
 import 'package:filmflex/core/api/film_flex_api.dart';
+import 'package:filmflex/core/extensions.dart';
 import 'package:filmflex/model/movie_list.dart';
 import 'package:filmflex/src/common_widget/popular_movie_cast_tile.dart';
 import 'package:flutter/material.dart';
@@ -91,8 +92,8 @@ class PopularMovieDetail extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).pop();
                       },
-                      child: SvgPicture.asset('assets/icons/Back.svg')),
-                  SvgPicture.asset('assets/icons/Menu2.svg')
+                      child: SvgPicture.asset('Back'.svg)),
+                  SvgPicture.asset('Menu2'.svg)
                 ],
               ),
             ),
@@ -136,7 +137,7 @@ class PopularMovieDetail extends StatelessWidget {
                                 style: AppStyle.bigMullish,
                               ),
                             ),
-                            SvgPicture.asset('assets/icons/favorite.svg'),
+                            SvgPicture.asset('favorite'.svg),
                           ],
                         ),
                         UiHelper.verticalSmallestSpacing,

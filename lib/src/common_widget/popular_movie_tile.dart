@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:filmflex/constant/constants.dart';
+import 'package:filmflex/core/extensions.dart';
 import 'package:filmflex/model/movie_list.dart';
 import 'package:filmflex/src/screen/popular_movie_detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +22,7 @@ class MovieTile extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return PopularMovieDetail(popularMovie: movie!);
-          }));
+          context.push( PopularMovieDetail(popularMovie: movie!), context);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

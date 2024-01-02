@@ -1,8 +1,9 @@
 import 'package:filmflex/constant/constants.dart';
 import 'package:filmflex/core/api/film_flex_api.dart';
-import 'package:filmflex/src/screen/popular_movie_detail_screen.dart';
+import 'package:filmflex/core/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'screen.dart';
 
 import '../common_widget/more_movie_tile.dart';
 
@@ -22,7 +23,7 @@ class MoreNowShowingMovieScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(left: 0.0),
             child: SvgPicture.asset(
-              'assets/icons/Back2.svg',
+              'Back2'.svg,
               fit: BoxFit.scaleDown,
             ),
           ),
@@ -61,10 +62,7 @@ class MoreNowShowingMovieScreen extends StatelessWidget {
                       final movie = data[index];
                       return GestureDetector(
                           onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                                  return PopularMovieDetail(popularMovie: movie);
-                                }));
+                            context.push(PopularMovieDetail(popularMovie: movie), context);
                           },
                           child: MoreMovieTile(movie: movie));
                     },

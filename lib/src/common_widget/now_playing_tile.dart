@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:filmflex/constant/constants.dart';
+import 'package:filmflex/core/extensions.dart';
 import 'package:filmflex/model/movie_list.dart';
 import 'package:filmflex/src/screen/popular_movie_detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,7 @@ class NowPlayingMovieTile extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return PopularMovieDetail(popularMovie: popularMovie!);
-          }));
+          context.push(PopularMovieDetail(popularMovie: popularMovie!), context);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,22 +64,6 @@ class NowPlayingMovieTile extends StatelessWidget {
                 style: AppStyle.mediumMullish,
               ),
             ),
-            // SizedBox(
-            //   width: 148,
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Text(
-            //         'Popularity:',
-            //         style: AppStyle.smallestMullish.copyWith(fontSize: 14),
-            //       ),
-            //       Text(
-            //         popularMovie!.popularity!.toStringAsFixed(1).toString(),
-            //         style: AppStyle.mediumMullish,
-            //       ),
-            //     ],
-            //   ),
-            // ),
           ],
         ),
       ),
