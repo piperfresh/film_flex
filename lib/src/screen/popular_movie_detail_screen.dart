@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:filmflex/constant/app_colors.dart';
 import 'package:filmflex/core/api/film_flex_api.dart';
-import 'package:filmflex/core/extensions.dart';
+import 'package:filmflex/core/extensions/extensions.dart';
 import 'package:filmflex/model/movie_list.dart';
 import 'package:filmflex/src/common_widget/popular_movie_cast_tile.dart';
 import 'package:flutter/material.dart';
@@ -117,155 +117,152 @@ class PopularMovieDetail extends StatelessWidget {
                 ),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
-                  child: Padding(
-                    padding:  EdgeInsets.all(22.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: 250.w,
-                              height: 92.h,
-                              child: Text(
-                                popularMovie.originalTitle ?? '',
-                                textAlign: TextAlign.left,
-                                maxLines: 10,
-                                softWrap: true,
-                                style: AppStyle.bigMullish,
-                              ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 250.w,
+                            height: 92.h,
+                            child: Text(
+                              popularMovie.originalTitle ?? '',
+                              textAlign: TextAlign.left,
+                              maxLines: 10,
+                              softWrap: true,
+                              style: AppStyle.bigMullish,
                             ),
-                            SvgPicture.asset('favorite'.svg),
-                          ],
-                        ),
-                        UiHelper.verticalSmallestSpacing,
-                        Row(
-                          children: [
-                            Text(
-                              'Popularity:   ',
-                              style: AppStyle.smallMullish
-                                  .copyWith(color: AppColors.greyColor),
-                            ),
-                            Text(
-                              popularMovie.popularity!
-                                  .toStringAsFixed(2)
-                                  .toString(),
-                              style: AppStyle.smallMullish,
-                            )
-                          ],
-                        ),
-                        UiHelper.verticalSmallestSpacing,
-                        Row(
-                          children: [
-                            SvgPicture.asset('assets/icons/Star.svg'),
-                            UiHelper.horizontalSmallestSpacing,
-                            Text(
-                              '${popularMovie.voteAverage!.toStringAsFixed(1)}/10 TMDB',
-                              style: AppStyle.smallMullish
-                                  .copyWith(color: AppColors.greyColor),
-                            ),
-                          ],
-                        ),
-                        UiHelper.verticalSmallestSpacing,
-                        Wrap(
-                          spacing: 5,
-                          direction: Axis.horizontal,
-                          children: genresNames
-                              .map(
-                                (genre) => Chip(
-                                  side: BorderSide.none,
-                                  backgroundColor: AppColors.chipColor,
-                                  padding: EdgeInsets.zero,
-                                  shape: const StadiumBorder(),
-                                  label: Text(
-                                    genre.toString(),
-                                    style: AppStyle.smallestMullish.copyWith(
-                                        fontSize: 8.sp,
-                                        color: AppColors.chipTextColor),
-                                  ),
-                                ),
-                          )
-                              .toList(),
-                        ),
-                        UiHelper.verticalSmallestSpacing,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            DetailColumnWidget(
-                              firstChild: 'Language',
-                              secondChild: popularMovie.originalLanguage!,
-                              popularMovie: popularMovie,
-                            ),
-                            DetailColumnWidget(
-                              firstChild: 'Rating',
-                              secondChild:
-                                  popularMovie.adult == false ? 'G' : 'PG - 13',
-                              popularMovie: popularMovie,
-                            ),
-                            DetailColumnWidget(
-                              firstChild: 'Release Date',
-                              secondChild: popularMovie.releaseDate!,
-                              popularMovie: popularMovie,
-                            ),
-                          ],
-                        ),
-                        UiHelper.verticalSmallestSpacing,
-                        Text(
-                          'Description',
-                          style: AppStyle.biggestMerriWeather,
-                        ),
-                        UiHelper.verticalSmallestSpacing,
-                        Text(
-                          popularMovie.overview!,
-                          style: AppStyle.smallMullish.copyWith(
-                            color: AppColors.greyColor,
                           ),
-                        ),
-                        UiHelper.verticalSmallestSpacing,
-                        Text(
-                          'Cast',
-                          style: AppStyle.biggestMerriWeather,
-                        ),
-                        FutureBuilder(
-                          future: filmFlexApi.getPopularMoviesCast(
-                              context, popularMovie.id.toString()),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else if (snapshot.hasError) {
-                              return Text('${snapshot.error}');
-                            } else {
-                              final casts = snapshot.data;
-                              return SizedBox(
-
-                                height: 200.h,
-                                width: 330.w,
-                                child: ListView.separated(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: casts!.length,
-                                  itemBuilder: (context, index) {
-                                    final popularMovieCast = casts[index];
-                                    return PopularMovieCastTile(
-                                        popularMovieCast: popularMovieCast);
-                                  },
-                                  separatorBuilder: (context, index) {
-                                    return  SizedBox(
-                                      width: 12.w,
-                                    );
-                                  },
+                          SvgPicture.asset('favorite'.svg),
+                        ],
+                      ),
+                      UiHelper.verticalSmallestSpacing,
+                      Row(
+                        children: [
+                          Text(
+                            'Popularity:   ',
+                            style: AppStyle.smallMullish
+                                .copyWith(color: AppColors.greyColor),
+                          ),
+                          Text(
+                            popularMovie.popularity!
+                                .toStringAsFixed(2)
+                                .toString(),
+                            style: AppStyle.smallMullish,
+                          )
+                        ],
+                      ),
+                      UiHelper.verticalSmallestSpacing,
+                      Row(
+                        children: [
+                          SvgPicture.asset('assets/icons/Star.svg'),
+                          UiHelper.horizontalSmallestSpacing,
+                          Text(
+                            '${popularMovie.voteAverage!.toStringAsFixed(1)}/10 TMDB',
+                            style: AppStyle.smallMullish
+                                .copyWith(color: AppColors.greyColor),
+                          ),
+                        ],
+                      ),
+                      UiHelper.verticalSmallestSpacing,
+                      Wrap(
+                        spacing: 5,
+                        direction: Axis.horizontal,
+                        children: genresNames
+                            .map(
+                              (genre) => Chip(
+                                side: BorderSide.none,
+                                backgroundColor: AppColors.chipColor,
+                                padding: EdgeInsets.zero,
+                                shape: const StadiumBorder(),
+                                label: Text(
+                                  genre.toString(),
+                                  style: AppStyle.smallestMullish.copyWith(
+                                      fontSize: 8.sp,
+                                      color: AppColors.chipTextColor),
                                 ),
-                              );
-                            }
-                          },
+                              ),
                         )
-                      ],
-                    ),
-                  ),
+                            .toList(),
+                      ),
+                      UiHelper.verticalSmallestSpacing,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          DetailColumnWidget(
+                            firstChild: 'Language',
+                            secondChild: popularMovie.originalLanguage!,
+                            popularMovie: popularMovie,
+                          ),
+                          DetailColumnWidget(
+                            firstChild: 'Rating',
+                            secondChild:
+                                popularMovie.adult == false ? 'G' : 'PG - 13',
+                            popularMovie: popularMovie,
+                          ),
+                          DetailColumnWidget(
+                            firstChild: 'Release Date',
+                            secondChild: popularMovie.releaseDate!,
+                            popularMovie: popularMovie,
+                          ),
+                        ],
+                      ),
+                      UiHelper.verticalSmallestSpacing,
+                      Text(
+                        'Description',
+                        style: AppStyle.biggestMerriWeather,
+                      ),
+                      UiHelper.verticalSmallestSpacing,
+                      Text(
+                        popularMovie.overview!,
+                        style: AppStyle.smallMullish.copyWith(
+                          color: AppColors.greyColor,
+                        ),
+                      ),
+                      UiHelper.verticalSmallestSpacing,
+                      Text(
+                        'Cast',
+                        style: AppStyle.biggestMerriWeather,
+                      ),
+                      FutureBuilder(
+                        future: filmFlexApi.getPopularMoviesCast(
+                            context, popularMovie.id.toString()),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text('${snapshot.error}');
+                          } else {
+                            final casts = snapshot.data;
+                            return SizedBox(
+
+                              height: 200.h,
+                              width: 330.w,
+                              child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: casts!.length,
+                                itemBuilder: (context, index) {
+                                  final popularMovieCast = casts[index];
+                                  return PopularMovieCastTile(
+                                      popularMovieCast: popularMovieCast);
+                                },
+                                separatorBuilder: (context, index) {
+                                  return  SizedBox(
+                                    width: 12.w,
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                        },
+                      )
+                    ],
+                  ).paddingAll(22.w),
                 ),
               ),
             ),

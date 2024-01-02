@@ -1,6 +1,6 @@
 import 'package:filmflex/constant/constants.dart';
 import 'package:filmflex/core/api/film_flex_api.dart';
-import 'package:filmflex/core/extensions.dart';
+import 'package:filmflex/core/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'screen.dart';
@@ -20,23 +20,17 @@ class MoreNowShowingMovieScreen extends StatelessWidget {
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: Padding(
-            padding: const EdgeInsets.only(left: 0.0),
-            child: SvgPicture.asset(
-              'Back2'.svg,
-              fit: BoxFit.scaleDown,
-            ),
-          ),
+          child: SvgPicture.asset(
+            'Back2'.svg,
+            fit: BoxFit.scaleDown,
+          ).paddingOnly(leftPadding: 0.0),
         ),
         title: Text(
           'Now Showing',
           style: AppStyle.bigMullish,
         ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 10.0),
-            child: Icon(Icons.menu),
-          ),
+        actions:  [
+          const Icon(Icons.menu).paddingOnly(rightPadding: 10.0),
         ],
       ),
       body: Column(

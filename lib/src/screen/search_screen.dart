@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:filmflex/constant/ui_helper.dart';
-import 'package:filmflex/core/extensions.dart';
+import 'package:filmflex/core/extensions/extensions.dart';
 import 'package:filmflex/model/movie_list.dart';
 import 'package:filmflex/providers/provider.dart';
 import 'package:filmflex/src/common_widget/search_tile.dart';
@@ -39,7 +39,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Navigator.of(context).pop();
           },
           child: SvgPicture.asset(
-            'assets/icons/Back2.svg',
+            'Back2'.svg,
             fit: BoxFit.scaleDown,
           ),
         ),
@@ -83,9 +83,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              UiHelper.verticalSmallSpacing,
               FutureBuilder(
                 future: filmFlexApi.fetchMovies(context, query),
                 builder: (context, snapshot) {
@@ -121,7 +119,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           )
                         : Expanded(
                             child: Center(
-                                child: _searchController.text.isNotEmpty
+                                child: _searchController.text.isNotNullOrEmpty
                                     ? Text(
                                         'Search Not Found',
                                         style: AppStyle.bigMullish,
