@@ -28,6 +28,7 @@ class MovieTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+
               height: 212.h,
               width: 143.w,
               decoration:  BoxDecoration(
@@ -62,7 +63,9 @@ class MovieTile extends StatelessWidget {
                 textAlign: TextAlign.left,
                 maxLines: 10,
                 softWrap: true,
-                style: AppStyle.mediumMullish,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge,
               ),
             ),
             SizedBox(
@@ -72,11 +75,15 @@ class MovieTile extends StatelessWidget {
                 children: [
                   Text(
                     'Popularity:',
-                    style: AppStyle.smallestMullish.copyWith(fontSize: 14.sp),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge?.copyWith(fontSize: 14.sp),
                   ),
                   Text(
                     movie!.popularity!.toStringAsFixed(1).toString(),
-                    style: AppStyle.mediumMullish,
+                    style:  Theme.of(context)
+                        .textTheme
+                        .bodyLarge,
                   ),
                 ],
               ) : null,

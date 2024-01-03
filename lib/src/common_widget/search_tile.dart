@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:filmflex/model/movie_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../constant/app_string.dart';
 
@@ -12,8 +13,8 @@ class SearchTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 212,
-      width: 143,
+      height: 212.h,
+      width: 143.w,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(
           Radius.circular(10),

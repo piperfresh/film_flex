@@ -56,7 +56,9 @@ class PopularMovieDetail extends StatelessWidget {
           Positioned(
             top: 20.0.h,
             child: SizedBox(
-              height: 280.h,
+              // color: Colors.red,
+              height: 210.h,
+              // height: 280.h,
               width: 440.w,
               child: CachedNetworkImage(
                 fit: BoxFit.fill,
@@ -66,10 +68,11 @@ class PopularMovieDetail extends StatelessWidget {
                   width: double.infinity.w,
                   height: 280.h,
                   decoration: BoxDecoration(
-                      borderRadius:  BorderRadius.all(
-                        Radius.circular(10.w),
-                      ),
-                      image: DecorationImage(image: imageProvider)),
+                      // borderRadius:  BorderRadius.all(
+                      //   Radius.circular(10.w),
+                      // ),
+                      image: DecorationImage(
+                          image: imageProvider, fit: BoxFit.fill)),
                 ),
                 placeholder: (context, url) =>
                     const Center(child: CircularProgressIndicator()),
@@ -78,7 +81,7 @@ class PopularMovieDetail extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 80.h,
+            top: 60.h,
             left: 20.w,
             right: 20.w,
             child: Container(
@@ -99,18 +102,29 @@ class PopularMovieDetail extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 280.0,
+            top: 320.0,
             child: Container(
               height: 500.h,
               width: 360.w,
-              color: Colors.transparent,
+              // color: Colors.white,
+              // color: Theme.of(context).textTheme.displayLarge?.backgroundColor,
+              decoration: BoxDecoration(
+                color:
+                    Theme.of(context).textTheme.displayLarge?.backgroundColor,
+                // color: Colors.white,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
+              ),
               child: Container(
                 height: 500.h,
                 width: 360.w,
-                decoration:  const BoxDecoration(
-
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                  color:
+                      Theme.of(context).textTheme.displayLarge?.backgroundColor,
+                  // color: Colors.white,
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
                   ),
@@ -132,7 +146,8 @@ class PopularMovieDetail extends StatelessWidget {
                               textAlign: TextAlign.left,
                               maxLines: 10,
                               softWrap: true,
-                              style: AppStyle.bigMullish,
+                              // style: AppStyle.bigMullish,
+                              style: Theme.of(context).textTheme.displayMedium,
                             ),
                           ),
                           SvgPicture.asset('favorite'.svg),
@@ -141,16 +156,16 @@ class PopularMovieDetail extends StatelessWidget {
                       UiHelper.verticalSmallestSpacing,
                       Row(
                         children: [
-                          Text(
-                            'Popularity:   ',
-                            style: AppStyle.smallMullish
-                                .copyWith(color: AppColors.greyColor),
-                          ),
+                          Text('Popularity:   ',
+                              style: Theme.of(context).textTheme.bodyMedium
+                              // ?.copyWith(color: AppColors.greyColor),
+                              ),
                           Text(
                             popularMovie.popularity!
                                 .toStringAsFixed(2)
                                 .toString(),
-                            style: AppStyle.smallMullish,
+                            // style: AppStyle.smallMullish,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           )
                         ],
                       ),
@@ -161,8 +176,12 @@ class PopularMovieDetail extends StatelessWidget {
                           UiHelper.horizontalSmallestSpacing,
                           Text(
                             '${popularMovie.voteAverage!.toStringAsFixed(1)}/10 TMDB',
-                            style: AppStyle.smallMullish
-                                .copyWith(color: AppColors.greyColor),
+                            // style: AppStyle.smallMullish
+                            //     .copyWith(color: AppColors.greyColor),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(color: AppColors.greyColor),
                           ),
                         ],
                       ),
@@ -179,9 +198,15 @@ class PopularMovieDetail extends StatelessWidget {
                                 shape: const StadiumBorder(),
                                 label: Text(
                                   genre.toString(),
-                                  style: AppStyle.smallestMullish.copyWith(
-                                      fontSize: 8.sp,
-                                      color: AppColors.chipTextColor),
+                                  // style: AppStyle.smallestMullish.copyWith(
+                                  //     fontSize: 8.sp,
+                                  //     color: AppColors.chipTextColor),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
+                                          fontSize: 8.sp,
+                                          color: AppColors.chipTextColor),
                                 ),
                               ),
                         )
@@ -212,7 +237,8 @@ class PopularMovieDetail extends StatelessWidget {
                       UiHelper.verticalSmallestSpacing,
                       Text(
                         'Description',
-                        style: AppStyle.biggestMerriWeather,
+                        // style: AppStyle.biggestMerriWeather,
+                        style: Theme.of(context).textTheme.displayLarge,
                       ),
                       UiHelper.verticalSmallestSpacing,
                       Text(
@@ -224,7 +250,8 @@ class PopularMovieDetail extends StatelessWidget {
                       UiHelper.verticalSmallestSpacing,
                       Text(
                         'Cast',
-                        style: AppStyle.biggestMerriWeather,
+                        // style: AppStyle.biggestMerriWeather,
+                        style: Theme.of(context).textTheme.displayLarge,
                       ),
                       FutureBuilder(
                         future: filmFlexApi.getPopularMoviesCast(
@@ -242,7 +269,7 @@ class PopularMovieDetail extends StatelessWidget {
                             return SizedBox(
 
                               height: 200.h,
-                              width: 330.w,
+                              width: 360.w,
                               child: ListView.separated(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: casts!.length,
@@ -252,7 +279,7 @@ class PopularMovieDetail extends StatelessWidget {
                                       popularMovieCast: popularMovieCast);
                                 },
                                 separatorBuilder: (context, index) {
-                                  return  SizedBox(
+                                  return SizedBox(
                                     width: 12.w,
                                   );
                                 },
@@ -262,7 +289,11 @@ class PopularMovieDetail extends StatelessWidget {
                         },
                       )
                     ],
-                  ).paddingAll(22.w),
+                  ).paddingOnly(
+                      leftPadding: 10.w,
+                      topPadding: 22.h,
+                      bottomPadding: 22.h,
+                      rightPadding: 10.w),
                 ),
               ),
             ),

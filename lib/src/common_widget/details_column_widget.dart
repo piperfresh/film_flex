@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../constant/app_colors.dart';
-import '../../constant/app_style.dart';
 import '../../model/movie_list.dart';
 
 class DetailColumnWidget extends StatelessWidget {
@@ -23,9 +22,15 @@ class DetailColumnWidget extends StatelessWidget {
       children: [
         Text(
           firstChild,
-          style: AppStyle.smallMullish.copyWith(color: AppColors.greyColor),
+          // style: AppStyle.smallMullish.copyWith(color: AppColors.greyColor),
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium
+              ?.copyWith(color: AppColors.greyColor),
         ),
-        Text(secondChild, style: AppStyle.smallMullish)
+        Text(secondChild,
+            // style: AppStyle.smallMullish,
+            style: Theme.of(context).textTheme.bodyMedium)
       ],
     );
   }

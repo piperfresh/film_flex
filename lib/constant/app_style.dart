@@ -1,10 +1,9 @@
-import 'dart:ui';
-
 import 'package:filmflex/constant/app_colors.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AppStyle{
+class AppStyle {
   static var mediumMerriWeather = GoogleFonts.merriweather(
     fontWeight: FontWeight.w900,
     fontSize: 16.sp,
@@ -35,10 +34,9 @@ class AppStyle{
     fontSize: 20.sp,
     color: AppColors.blackColor,
   );
-   static var biggestMerriWeather = GoogleFonts.merriweather(
+  static var biggestMerriWeather = GoogleFonts.merriweather(
     fontWeight: FontWeight.w900,
     fontSize: 16.sp,
     color: AppColors.primaryColor,
   );
-
 }

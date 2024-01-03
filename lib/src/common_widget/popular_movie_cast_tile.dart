@@ -58,9 +58,9 @@ class PopularMovieCastTile extends StatelessWidget {
             maxLines: 2,
             textAlign: TextAlign.left,
             softWrap: true,
-            style: AppStyle.smallMullish.copyWith(
-              color: AppColors.primaryColor,
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium,
           ),
         ),
       ],

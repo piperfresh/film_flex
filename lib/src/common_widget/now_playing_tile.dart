@@ -61,7 +61,9 @@ class NowPlayingMovieTile extends StatelessWidget {
                 textAlign: TextAlign.left,
                 maxLines: 10,
                 softWrap: true,
-                style: AppStyle.mediumMullish,
+                style:  Theme.of(context)
+                    .textTheme
+                    .bodyLarge,
               ),
             ),
           ],

@@ -27,7 +27,8 @@ class MorePopularMovieScreen extends StatelessWidget {
         ),
         title: Text(
           'Popular Movies',
-          style: AppStyle.bigMullish,
+          // style: AppStyle.bigMullish,
+          style: Theme.of(context).textTheme.displayMedium,
         ),
         actions:  [
           const Icon(Icons.menu).paddingOnly(rightPadding: 10.0),

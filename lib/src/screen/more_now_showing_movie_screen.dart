@@ -27,7 +27,8 @@ class MoreNowShowingMovieScreen extends StatelessWidget {
         ),
         title: Text(
           'Now Showing',
-          style: AppStyle.bigMullish,
+          // style: AppStyle.bigMullish,
+          style: Theme.of(context).textTheme.displayMedium,
         ),
         actions:  [
           const Icon(Icons.menu).paddingOnly(rightPadding: 10.0),

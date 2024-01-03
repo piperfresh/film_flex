@@ -1,5 +1,7 @@
 import 'package:filmflex/core/extensions/extensions.dart';
+import 'package:filmflex/providers/theme_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -19,13 +21,14 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+
         leading: SvgPicture.asset(
           'Menu'.svg,
           fit: BoxFit.scaleDown,
         ).paddingAll(8.0),
         title: Text(
           'Film Flix',
-          style: AppStyle.mediumMerriWeather,
+          style: Theme.of(context).textTheme.displayLarge,
         ),
         actions: [
           GestureDetector(
@@ -39,10 +42,20 @@ class HomeScreen extends StatelessWidget {
               fit: BoxFit.scaleDown,
             ).paddingAll(5.0),
           ),
-          SvgPicture.asset(
-            'Notif'.svg,
-            fit: BoxFit.scaleDown,
-          ).paddingAll(8.0),
+          Consumer(
+            builder: (context, ref, child) =>
+             GestureDetector(
+              onTap: (){
+                ref.watch(themeNotifierProvider.notifier).toggleTheme();
+              },
+              child: SvgPicture.asset(
+                'mode'.svg,
+                height: 20.h,
+                width: 20.w,
+                fit: BoxFit.scaleDown,
+              ).paddingAll(8.0),
+            ),
+          ),
         ],
       ),
       body: SizedBox(
@@ -58,7 +71,8 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Text(
                     'Now Showing',
-                    style: AppStyle.mediumMerriWeather,
+                    // style: AppStyle.mediumMerriWeather,
+                    style: Theme.of(context).textTheme.displayLarge,
                   ),
                   ActionButton(
                     text: 'See more',
@@ -117,7 +131,8 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Text(
                     'Popular',
-                    style: AppStyle.mediumMerriWeather,
+                    // style: AppStyle.mediumMerriWeather,
+                    style: Theme.of(context).textTheme.displayLarge,
                   ),
                   ActionButton(
                     text: 'See more',
@@ -175,7 +190,8 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Text(
                     'Upcoming',
-                    style: AppStyle.mediumMerriWeather,
+                    // style: AppStyle.mediumMerriWeather,
+                    style: Theme.of(context).textTheme.displayLarge,
                   ),
                   ActionButton(
                     text: 'See more',

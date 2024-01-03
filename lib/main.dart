@@ -1,3 +1,4 @@
+import 'package:filmflex/providers/theme_notifier.dart';
 import 'package:filmflex/src/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,15 +18,16 @@ class MyApp extends StatelessWidget {
       child: ScreenUtilInit(
         designSize: const Size(360, 640),
         minTextAdapt: true,
-        builder: (context, child) =>
-         MaterialApp(
-           debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
-          home: HomeScreen(),
+        builder: (context, child) => Consumer(
+          builder: (context, ref, child) {
+            final theme = ref.watch(themeProvider);
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Flutter Demo',
+              theme: theme,
+              home: HomeScreen(),
+            );
+          },
         ),
       ),
     );

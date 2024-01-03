@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../constant/app_style.dart';
 import '../../core/api/film_flex_api.dart';
 
 final filmFlexApi = FilmFlexApi();
@@ -45,7 +44,8 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
         title: Text(
           'Search',
-          style: AppStyle.mediumMerriWeather,
+          // style: AppStyle.mediumMerriWeather,
+          style: Theme.of(context).textTheme.displayLarge,
         ),
       ),
       body: Padding(
@@ -60,7 +60,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 height: 50,
                 child: TextField(
                   focusNode: _focusNode,
-                  style: AppStyle.smallMullish,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   controller: _searchController,
                   onChanged: (value) {
                     if (_debounce?.isActive ?? false) {
@@ -73,13 +73,22 @@ class _SearchScreenState extends State<SearchScreen> {
                   },
                   decoration: InputDecoration(
                     hintText: 'The movies',
-                    hintStyle: AppStyle.smallMullish,
+                    hintStyle: Theme.of(context).textTheme.bodyMedium,
                     border: const OutlineInputBorder(
                       gapPadding: 3.0,
                     ),
-                    focusedBorder: const OutlineInputBorder(),
-                    enabledBorder: const OutlineInputBorder(),
-                    disabledBorder: const OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Theme.of(context).textTheme.bodyMedium!.color!,
+                    )),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Theme.of(context).textTheme.bodyMedium!.color!,
+                    )),
+                    disabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Theme.of(context).textTheme.bodyMedium!.color!,
+                    )),
                   ),
                 ),
               ),
@@ -121,8 +130,10 @@ class _SearchScreenState extends State<SearchScreen> {
                             child: Center(
                                 child: _searchController.text.isNotNullOrEmpty
                                     ? Text(
-                                        'Search Not Found',
-                                        style: AppStyle.bigMullish,
+                                  'Search Not Found',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displayMedium,
                                       )
                                     : null),
                           );
