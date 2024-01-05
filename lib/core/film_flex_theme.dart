@@ -68,7 +68,6 @@ class FilmFlexTheme {
     appBarTheme: const AppBarTheme(
         foregroundColor: Colors.white, backgroundColor: Colors.white),
     textTheme: lightTextTheme,
-
    );
   }
 

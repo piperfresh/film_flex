@@ -3,7 +3,6 @@ import 'package:filmflex/constant/app_string.dart';
 import 'package:filmflex/core/api/api_utils.dart';
 import 'package:filmflex/model/movie_list.dart';
 import 'package:filmflex/model/popular_movie_cast.dart';
-import 'package:filmflex/model/search_movie.dart';
 import 'package:filmflex/services/message_service/snack_bar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_logger/simple_logger.dart';
@@ -38,13 +37,11 @@ class FilmFlexApi {
       logger.info('Get response from $string \n ${response.data}');
       logger.info('$baseUrl$string');
       logger.info('This is the $queryParameters');
-      print('Wow: ${response.requestOptions.uri}');
       if (response.statusCode == 200) {
-        logger.severe('Received  response: ${response.statusCode}');
-        logger.severe('Received  response: ${response.statusMessage}');
+        logger.info('Received  response: ${response.statusCode}');
+        logger.info('Received  response: ${response.statusMessage}');
         return ApiUtils.toApiResponse(response);
       } else {
-        print('Wow: ${response.requestOptions.uri}');
         logger.severe('Unsuccessful status code: ${response.statusCode}');
         return null;
       }
@@ -88,22 +85,6 @@ class FilmFlexApi {
     }
   }
 
-  // Future<ApiResponse?> getMovies() async {
-  // Future<MovieList> getMovies() async {
-  //   final response = await get(
-  //     AppString.movieListEndPoint,
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Authorization': 'Bearer $accessToken'
-  //     },
-  //     queryParameters: {
-  //       'page': 1,
-  //     },
-  //   );
-  //   final res = MovieList.fromJson(response?.data);
-  //   // return response;
-  //   return res;
-  // }
 
 
   Future<List<Movie>> getPopularMovie(BuildContext? context) async {
@@ -116,7 +97,6 @@ class FilmFlexApi {
       queryParameters: {'api_key': apiKey},
       context: context,
     );
-    // final res = PopularMovie.fromJson(response?.data['results']);
     if (response?.data['results'] != null) {
       final a = <Movie>[];
       response?.data['results'].forEach((v) {
@@ -208,7 +188,6 @@ class FilmFlexApi {
       response?.data['results'].forEach((searchMovie) {
         searchDetails.add(Movie.fromJson(searchMovie));
       });
-      print('This is the search details: $searchDetails');
       return searchDetails;
     } else {
       return [];

@@ -72,7 +72,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     });
                   },
                   decoration: InputDecoration(
-                    hintText: 'The movies',
+                    hintText: 'Search',
                     hintStyle: Theme.of(context).textTheme.bodyMedium,
                     border: const OutlineInputBorder(
                       gapPadding: 3.0,
