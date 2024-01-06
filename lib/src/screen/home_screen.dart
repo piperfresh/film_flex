@@ -5,9 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../constant/app_style.dart';
 import '../../core/api/film_flex_api.dart';
 import '../common_widget/common_widget.dart';
+import '../common_widget/flim_flex_future_builder.dart';
 import 'screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -85,45 +85,16 @@ class HomeScreen extends StatelessWidget {
                   leftPadding: 10.0.w,
                   rightPadding: 5.0.w,
                   bottomPadding: 10.0.w),
-              FutureBuilder(
+              FilmFlexFutureBuilder(
+                height: 320.h,
                 future: filmFlexApi.getNowPlayingMovies(context),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return SizedBox(
-                      height: 320.h,
-                      child: const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text('${snapshot.error}'),
-                    );
-                  } else {
-                    final nowPlayings = snapshot.data;
-                    return SizedBox(
-
-                      height: 280.h,
-
-                      child: ListView.separated(
-                        itemCount: nowPlayings!.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          final popularMovie = nowPlayings[index];
-                          return NowPlayingMovieTile(
-                            popularMovie: popularMovie,
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return SizedBox(
-                            width: 16.w,
-                          );
-                        },
-                      ),
-                    );
-                  }
-                },
-              ).paddingOnly(leftPadding: 10.0.w, topPadding: 10.0.w, bottomPadding: 10.0.w),
+                height2: 280.h,
+                // isPopular: true,
+                // filmFlexApi: filmFlexApi
+              ).paddingOnly(
+                  leftPadding: 10.0.w,
+                  topPadding: 10.0.w,
+                  bottomPadding: 10.0.w),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -145,44 +116,16 @@ class HomeScreen extends StatelessWidget {
                   leftPadding: 10.0.w,
                   rightPadding: 5.0.w,
                   bottomPadding: 10.0.w),
-              FutureBuilder(
+              FilmFlexFutureBuilder(
+                height: 320.h,
+                height2: 320.h,
                 future: filmFlexApi.getPopularMovie(context),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return SizedBox(
-                      height: 320.h,
-                      child: const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text('${snapshot.error}'),
-                    );
-                  } else {
-                    final movieList = snapshot.data;
-                    return SizedBox(
-                      height: 320.h,
-                      child: ListView.separated(
-                        itemCount: movieList!.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          final popularMovie = movieList[index];
-                          return MovieTile(
-                            isPopular: true,
-                            movie: popularMovie,
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return SizedBox(
-                            width: 16.w,
-                          );
-                        },
-                      ),
-                    );
-                  }
-                },
-              ).paddingOnly(leftPadding: 10.0.w, topPadding: 10.0.w, bottomPadding: 10.0.w),
+                isPopular: true,
+                // filmFlexApi: filmFlexApi
+              ).paddingOnly(
+                  leftPadding: 10.0.w,
+                  topPadding: 10.0.w,
+                  bottomPadding: 10.0.w),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -204,43 +147,15 @@ class HomeScreen extends StatelessWidget {
                   leftPadding: 10.0.w,
                   rightPadding: 5.0.w,
                   bottomPadding: 10.0.w),
-              FutureBuilder(
+              FilmFlexFutureBuilder(
+                height: 320.h,
+                height2: 320.h,
                 future: filmFlexApi.getUpcomingMovies(context),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return SizedBox(
-                      height: 320.h,
-                      child: const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text('${snapshot.error}'),
-                    );
-                  } else {
-                    final upcomingMovies = snapshot.data;
-                    return SizedBox(
-                      height: 320.h,
-                      child: ListView.separated(
-                        itemCount: upcomingMovies!.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          final upcomingMovie = upcomingMovies[index];
-                          return MovieTile(
-                            movie: upcomingMovie,
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return SizedBox(
-                            width: 16.w,
-                          );
-                        },
-                      ),
-                    );
-                  }
-                },
-              ).paddingOnly(leftPadding: 10.0.w, topPadding: 10.0.w, bottomPadding: 10.0.w),
+                // filmFlexApi: filmFlexApi
+              ).paddingOnly(
+                  leftPadding: 10.0.w,
+                  topPadding: 10.0.w,
+                  bottomPadding: 10.0.w),
             ],
           ),
         ),
@@ -248,3 +163,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
