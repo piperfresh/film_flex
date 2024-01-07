@@ -98,11 +98,11 @@ class FilmFlexApi {
       context: context,
     );
     if (response?.data['results'] != null) {
-      final a = <Movie>[];
+      final movieList = <Movie>[];
       response?.data['results'].forEach((v) {
-        a.add(Movie.fromJson(v));
+        movieList.add(Movie.fromJson(v));
       });
-      return a;
+      return movieList;
     } else {
       return [];
     }
