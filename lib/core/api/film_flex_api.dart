@@ -1,21 +1,20 @@
 import 'package:dio/dio.dart';
-import 'package:filmflex/constant/app_string.dart';
 import 'package:filmflex/core/api/api_utils.dart';
-import 'package:filmflex/model/movie_list.dart';
-import 'package:filmflex/model/popular_movie_cast.dart';
+import 'package:filmflex/features/movie/data/models/movie_list.dart';
+import 'package:filmflex/features/movie/data/models/popular_movie_cast.dart';
 import 'package:filmflex/services/message_service/snack_bar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_logger/simple_logger.dart';
 
+import '../constant/constants.dart';
 import 'api_response.dart';
 
 class FilmFlexApi {
   final logger = SimpleLogger();
-  String baseUrl = "https://api.themoviedb.org/3/";
-  String apiKey = "719c821ece3dffc5e63e38956968f693";
+
+
   final dio = Dio();
-  String accessToken =
-      "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MTljODIxZWNlM2RmZmM1ZTYzZTM4OTU2OTY4ZjY5MyIsInN1YiI6IjY1ODJmOWRiODgwNTUxNDA5ZDI3OTQ3ZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.t5WJkD3_FYPDRcpw0riZlP0upGU6ystCNMIErDfJphQ";
+
 
   //? Get Methods
   Future<ApiResponse?> get(

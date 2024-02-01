@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:filmflex/constant/constants.dart';
 import 'package:filmflex/core/extensions/extensions.dart';
-import 'package:filmflex/model/movie_list.dart';
+import 'package:filmflex/features/movie/data/models/movie_list.dart';
 import 'package:filmflex/src/screen/popular_movie_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../core/constant/app_string.dart';
 
 class NowPlayingMovieTile extends StatelessWidget {
   final Movie? popularMovie;

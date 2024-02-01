@@ -1,5 +1,7 @@
-import 'package:filmflex/constant/app_style.dart';
+
 import 'package:flutter/material.dart';
+
+import '../../core/constant/app_style.dart';
 
 class SnackBarService {
   static errorSnackBar(BuildContext context, String message) {

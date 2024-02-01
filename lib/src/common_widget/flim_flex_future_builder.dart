@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../model/movie_list.dart';
+import '../../features/movie/data/models/movie_list.dart';
 import 'common_widget.dart';
 
 class FilmFlexFutureBuilder extends StatelessWidget {

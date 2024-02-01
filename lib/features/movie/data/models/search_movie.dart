@@ -1,8 +1,10 @@
-class SearchMovie {
-  int? id;
-  String? name;
+import 'package:filmflex/features/movie/domain/entities/search_movie_entity.dart';
 
-  SearchMovie({this.id, this.name});
+class SearchMovie extends SearchMovieEntity {
+  SearchMovie({
+    super.id,
+    super.name,
+  });
 
   SearchMovie.fromJson(Map<String, dynamic> json) {
     id = json['id'];

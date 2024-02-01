@@ -1,15 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:filmflex/constant/app_colors.dart';
 import 'package:filmflex/core/api/film_flex_api.dart';
 import 'package:filmflex/core/extensions/extensions.dart';
-import 'package:filmflex/model/movie_list.dart';
+import 'package:filmflex/features/movie/data/models/movie_list.dart';
 import 'package:filmflex/src/common_widget/popular_movie_cast_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../constant/app_style.dart';
-import '../../constant/ui_helper.dart';
+import '../../core/constant/app_colors.dart';
+import '../../core/constant/app_style.dart';
+import '../../core/constant/ui_helper.dart';
 import '../common_widget/details_column_widget.dart';
 
 class PopularMovieDetail extends StatelessWidget {

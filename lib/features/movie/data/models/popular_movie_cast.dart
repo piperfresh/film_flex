@@ -1,30 +1,20 @@
-class PopularMovieCast {
-  bool? adult;
-  int? gender;
-  int? id;
-  String? knownForDepartment;
-  String? name;
-  String? originalName;
-  double? popularity;
-  String? profilePath;
-  int? castId;
-  String? character;
-  String? creditId;
-  int? order;
+import 'package:filmflex/features/movie/domain/entities/movie_cast_entity.dart';
 
-  PopularMovieCast(
-      {this.adult,
-        this.gender,
-        this.id,
-        this.knownForDepartment,
-        this.name,
-        this.originalName,
-        this.popularity,
-        this.profilePath,
-        this.castId,
-        this.character,
-        this.creditId,
-        this.order});
+class PopularMovieCast extends MovieCastEntity {
+  PopularMovieCast({
+    super.adult,
+    super.gender,
+    super.id,
+    super.knownForDepartment,
+    super.name,
+    super.originalName,
+    super.popularity,
+    super.profilePath,
+    super.castId,
+    super.character,
+    super.creditId,
+    super.order,
+  });
 
   PopularMovieCast.fromJson(Map<String, dynamic> json) {
     adult = json['adult'];

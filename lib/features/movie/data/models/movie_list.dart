@@ -1,33 +1,52 @@
-class Movie {
-  bool? adult;
-  String? backdropPath;
-  List<int>? genreIds;
-  int? id;
-  String? originalLanguage;
-  String? originalTitle;
-  String? overview;
-  double? popularity;
-  String? posterPath;
-  String? releaseDate;
-  String? title;
-  bool? video;
-  double? voteAverage;
-  int? voteCount;
+import 'package:filmflex/features/movie/domain/entities/movie_entity.dart';
 
-  Movie({this.adult,
-    this.backdropPath,
-    this.genreIds,
-    this.id,
-    this.originalLanguage,
-    this.originalTitle,
-    this.overview,
-    this.popularity,
-    this.posterPath,
-    this.releaseDate,
-    this.title,
-    this.video,
-    this.voteAverage,
-    this.voteCount});
+class Movie extends MovieEntity{
+  Movie({
+    super.adult,
+    super.backdropPath,
+    super.id,
+    super.genreIds,
+    super.originalLanguage,
+    super.originalTitle,
+    super.overview,
+    super.popularity,
+    super.posterPath,
+    super.releaseDate,
+    super.title,
+    super.video,
+    super.voteAverage,
+    super.voteCount
+});
+  // bool? adult;
+  // String? backdropPath;
+  // List<int>? genreIds;
+  // int? id;
+  // String? originalLanguage;
+  // String? originalTitle;
+  // String? overview;
+  // double? popularity;
+  // String? posterPath;
+  // String? releaseDate;
+  // String? title;
+  // bool? video;
+  // double? voteAverage;
+  // int? voteCount;
+
+  // Movie({this.adult,
+  //   this.backdropPath,
+  //   this.genreIds,
+  //   this.id,
+  //   this.originalLanguage,
+  //   this.originalTitle,
+  //   this.overview,
+  //   this.popularity,
+  //   this.posterPath,
+  //   this.releaseDate,
+  //   this.title,
+  //   this.video,
+  //   this.voteAverage,
+  //   this.voteCount});
+
 
   Movie.fromJson(Map<String, dynamic> json) {
     adult = json['adult'];

@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:filmflex/constant/ui_helper.dart';
+import 'package:filmflex/core/constant/ui_helper.dart';
 import 'package:filmflex/core/extensions/extensions.dart';
-import 'package:filmflex/model/movie_list.dart';
+import 'package:filmflex/features/movie/data/models/movie_list.dart';
 import 'package:filmflex/providers/provider.dart';
 import 'package:filmflex/src/common_widget/search_tile.dart';
 import 'package:filmflex/src/screen/popular_movie_detail_screen.dart';
@@ -15,7 +15,7 @@ import '../../core/api/film_flex_api.dart';
 final filmFlexApi = FilmFlexApi();
 
 class SearchScreen extends StatefulWidget {
-  SearchScreen({super.key});
+  const SearchScreen({super.key});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -44,7 +44,6 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
         title: Text(
           'Search',
-          // style: AppStyle.mediumMerriWeather,
           style: Theme.of(context).textTheme.displayLarge,
         ),
       ),
@@ -127,15 +126,16 @@ class _SearchScreenState extends State<SearchScreen> {
                             ),
                           )
                         : Expanded(
-                            child: Center(
-                                child: _searchController.text.isNotNullOrEmpty
-                                    ? Text(
-                                  'Search Not Found',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .displayMedium,
-                                      )
-                                    : null),
+                      child: Center(
+                              child: _searchController.text.isNotNullOrEmpty
+                                  ? Text(
+                                      'Search Not Found',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayMedium,
+                                    )
+                                  : null,
+                            ),
                           );
                   }
                 },

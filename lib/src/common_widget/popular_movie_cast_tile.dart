@@ -1,12 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:filmflex/constant/app_colors.dart';
-import 'package:filmflex/constant/app_style.dart';
-import 'package:filmflex/constant/ui_helper.dart';
-import 'package:filmflex/model/popular_movie_cast.dart';
+import 'package:filmflex/features/movie/data/models/popular_movie_cast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../constant/app_string.dart';
+import '../../core/constant/app_string.dart';
+import '../../core/constant/ui_helper.dart';
 
 class PopularMovieCastTile extends StatelessWidget {
   final PopularMovieCast popularMovieCast;
