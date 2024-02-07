@@ -29,6 +29,7 @@ class HomeScreen extends ConsumerWidget {
         leading: SvgPicture.asset(
           'Menu'.svg,
           fit: BoxFit.scaleDown,
+          colorFilter: ColorFilter.mode(Theme.of(context).textTheme.displayLarge!.color!, BlendMode.srcIn),
         ).paddingAll(8.0),
         title: Text(
           'Film Flix',
@@ -41,9 +42,10 @@ class HomeScreen extends ConsumerWidget {
             },
             child: SvgPicture.asset(
               'search_icon'.svg,
-              height: 20.h,
-              width: 20.h,
+              height: 18.h,
+              width: 18.h,
               fit: BoxFit.scaleDown,
+              colorFilter: ColorFilter.mode(Theme.of(context).textTheme.displayLarge!.color!, BlendMode.srcIn),
             ).paddingAll(5.0),
           ),
           Consumer(
@@ -54,9 +56,10 @@ class HomeScreen extends ConsumerWidget {
                   },
                   child: SvgPicture.asset(
                     'mode'.svg,
-                    height: 20.h,
-                    width: 20.w,
+                    height: 18.h,
+                    width: 18.w,
                     fit: BoxFit.scaleDown,
+                    colorFilter: ColorFilter.mode(Theme.of(context).textTheme.displayLarge!.color!, BlendMode.srcIn),
                   ).paddingAll(8.0),
                 ),
           ),
