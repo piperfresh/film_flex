@@ -1,7 +1,7 @@
 import 'package:filmflex/features/movie/domain/entities/movie_cast_entity.dart';
 
-class PopularMovieCast extends MovieCastEntity {
-  PopularMovieCast({
+class MovieCast extends MovieCastEntity {
+  MovieCast({
     super.adult,
     super.gender,
     super.id,
@@ -16,7 +16,7 @@ class PopularMovieCast extends MovieCastEntity {
     super.order,
   });
 
-  PopularMovieCast.fromJson(Map<String, dynamic> json) {
+  MovieCast.fromJson(Map<String, dynamic> json) {
     adult = json['adult'];
     gender = json['gender'];
     id = json['id'];
@@ -46,5 +46,22 @@ class PopularMovieCast extends MovieCastEntity {
     data['credit_id'] = creditId;
     data['order'] = order;
     return data;
+  }
+
+  factory MovieCast.fromEntity(MovieCastEntity movieCastEntity) {
+    return MovieCast(
+      adult: movieCastEntity.adult,
+      id: movieCastEntity.id,
+      castId: movieCastEntity.castId,
+      character: movieCastEntity.character,
+      creditId: movieCastEntity.creditId,
+      gender: movieCastEntity.gender,
+      knownForDepartment: movieCastEntity.knownForDepartment,
+      name: movieCastEntity.name,
+      order: movieCastEntity.order,
+      originalName: movieCastEntity.originalName,
+      popularity: movieCastEntity.popularity,
+      profilePath: movieCastEntity.profilePath,
+    );
   }
 }

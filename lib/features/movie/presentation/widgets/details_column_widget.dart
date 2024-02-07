@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 
-import '../../core/constant/app_colors.dart';
-import '../../features/movie/data/models/movie_list.dart';
+import '../../../../core/constant/app_colors.dart';
+import '../../data/models/movie_list.dart';
 
 class DetailColumnWidget extends StatelessWidget {
   const DetailColumnWidget({

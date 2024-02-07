@@ -2,19 +2,32 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:filmflex/core/api/film_flex_api.dart';
 import 'package:filmflex/core/extensions/extensions.dart';
 import 'package:filmflex/features/movie/data/models/movie_list.dart';
-import 'package:filmflex/src/common_widget/popular_movie_cast_tile.dart';
+import 'package:filmflex/features/movie/presentation/widgets/movie_cast_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../core/constant/app_colors.dart';
-import '../../core/constant/app_style.dart';
-import '../../core/constant/ui_helper.dart';
-import '../common_widget/details_column_widget.dart';
+import '../../../../core/constant/app_colors.dart';
+import '../../../../core/constant/app_style.dart';
+import '../../../../core/constant/ui_helper.dart';
+import '../providers/movie_provider/string_provider.dart';
+import '../providers/movie_provider/ui_provider.dart';
+import '../widgets/details_column_widget.dart';
 
-class PopularMovieDetail extends StatelessWidget {
+class PopularMovieDetail extends ConsumerStatefulWidget {
   final Movie popularMovie;
+
+  PopularMovieDetail({super.key, required this.popularMovie});
+
+  @override
+  ConsumerState<PopularMovieDetail> createState() => _PopularMovieDetailState();
+}
+
+class _PopularMovieDetailState extends ConsumerState<PopularMovieDetail> {
   final filmFlexApi = FilmFlexApi();
+
   final List<Map<int, String>> genresIdDetails = const [
     {12: 'ADVENTURE'},
     {14: 'FANTASY'},
@@ -37,40 +50,44 @@ class PopularMovieDetail extends StatelessWidget {
     {10770: 'TV MOVIE'}
   ];
 
-   PopularMovieDetail({super.key, required this.popularMovie});
+  /// I used this for the movieCastIdProvider to access the MovieId to get the Cast and i watched the provider
+  /// in getMovieCastProvider
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      ref.read(movieCastIdProvider.notifier).state =
+          widget.popularMovie.id.toString();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-
-
-    List<String> genresNames = popularMovie.genreIds!.map((id) {
+    final movieCast = ref.watch(movieCastProvider);
+    List<String> genresNames = widget.popularMovie.genreIds!.map((id) {
       Map<int, String> genre = genresIdDetails.firstWhere(
         (element) => element.keys.first == id,
         orElse: () => {0: 'UNKNOWN'},
       );
       return genre[id] ?? 'UNKNOWN';
     }).toList();
+
     return Scaffold(
       body: Stack(
         children: [
           Positioned(
             top: 20.0.h,
             child: SizedBox(
-              // color: Colors.red,
               height: 210.h,
-              // height: 280.h,
               width: 440.w,
               child: CachedNetworkImage(
                 fit: BoxFit.fill,
                 imageUrl:
-                    'https://image.tmdb.org/t/p/w500/${popularMovie.backdropPath}',
+                    'https://image.tmdb.org/t/p/w500/${widget.popularMovie.backdropPath}',
                 imageBuilder: (context, imageProvider) => Container(
                   width: double.infinity.w,
                   height: 280.h,
                   decoration: BoxDecoration(
-                      // borderRadius:  BorderRadius.all(
-                      //   Radius.circular(10.w),
-                      // ),
                       image: DecorationImage(
                           image: imageProvider, fit: BoxFit.fill)),
                 ),
@@ -106,12 +123,9 @@ class PopularMovieDetail extends StatelessWidget {
             child: Container(
               height: 500.h,
               width: 360.w,
-              // color: Colors.white,
-              // color: Theme.of(context).textTheme.displayLarge?.backgroundColor,
               decoration: BoxDecoration(
                 color:
                     Theme.of(context).textTheme.displayLarge?.backgroundColor,
-                // color: Colors.white,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
@@ -123,7 +137,6 @@ class PopularMovieDetail extends StatelessWidget {
                 decoration: BoxDecoration(
                   color:
                       Theme.of(context).textTheme.displayLarge?.backgroundColor,
-                  // color: Colors.white,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
@@ -142,11 +155,10 @@ class PopularMovieDetail extends StatelessWidget {
                             width: 250.w,
                             height: 92.h,
                             child: Text(
-                              popularMovie.originalTitle ?? '',
+                              widget.popularMovie.originalTitle ?? '',
                               textAlign: TextAlign.left,
                               maxLines: 10,
                               softWrap: true,
-                              // style: AppStyle.bigMullish,
                               style: Theme.of(context).textTheme.displayMedium,
                             ),
                           ),
@@ -161,10 +173,9 @@ class PopularMovieDetail extends StatelessWidget {
                               // ?.copyWith(color: AppColors.greyColor),
                               ),
                           Text(
-                            popularMovie.popularity!
+                            widget.popularMovie.popularity!
                                 .toStringAsFixed(2)
                                 .toString(),
-                            // style: AppStyle.smallMullish,
                             style: Theme.of(context).textTheme.bodyMedium,
                           )
                         ],
@@ -175,9 +186,7 @@ class PopularMovieDetail extends StatelessWidget {
                           SvgPicture.asset('assets/icons/Star.svg'),
                           UiHelper.horizontalSmallestSpacing,
                           Text(
-                            '${popularMovie.voteAverage!.toStringAsFixed(1)}/10 TMDB',
-                            // style: AppStyle.smallMullish
-                            //     .copyWith(color: AppColors.greyColor),
+                            '${widget.popularMovie.voteAverage!.toStringAsFixed(1)}/10 TMDB',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium
@@ -198,9 +207,6 @@ class PopularMovieDetail extends StatelessWidget {
                                 shape: const StadiumBorder(),
                                 label: Text(
                                   genre.toString(),
-                                  // style: AppStyle.smallestMullish.copyWith(
-                                  //     fontSize: 8.sp,
-                                  //     color: AppColors.chipTextColor),
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium
@@ -209,7 +215,7 @@ class PopularMovieDetail extends StatelessWidget {
                                           color: AppColors.chipTextColor),
                                 ),
                               ),
-                        )
+                            )
                             .toList(),
                       ),
                       UiHelper.verticalSmallestSpacing,
@@ -218,31 +224,31 @@ class PopularMovieDetail extends StatelessWidget {
                         children: [
                           DetailColumnWidget(
                             firstChild: 'Language',
-                            secondChild: popularMovie.originalLanguage!,
-                            popularMovie: popularMovie,
+                            secondChild: widget.popularMovie.originalLanguage!,
+                            popularMovie: widget.popularMovie,
                           ),
                           DetailColumnWidget(
                             firstChild: 'Rating',
-                            secondChild:
-                                popularMovie.adult == false ? 'G' : 'PG - 13',
-                            popularMovie: popularMovie,
+                            secondChild: widget.popularMovie.adult == false
+                                ? 'G'
+                                : 'PG - 13',
+                            popularMovie: widget.popularMovie,
                           ),
                           DetailColumnWidget(
                             firstChild: 'Release Date',
-                            secondChild: popularMovie.releaseDate!,
-                            popularMovie: popularMovie,
+                            secondChild: widget.popularMovie.releaseDate!,
+                            popularMovie: widget.popularMovie,
                           ),
                         ],
                       ),
                       UiHelper.verticalSmallestSpacing,
                       Text(
                         'Description',
-                        // style: AppStyle.biggestMerriWeather,
                         style: Theme.of(context).textTheme.displayLarge,
                       ),
                       UiHelper.verticalSmallestSpacing,
                       Text(
-                        popularMovie.overview!,
+                        widget.popularMovie.overview!,
                         style: AppStyle.smallMullish.copyWith(
                           color: AppColors.greyColor,
                         ),
@@ -250,44 +256,73 @@ class PopularMovieDetail extends StatelessWidget {
                       UiHelper.verticalSmallestSpacing,
                       Text(
                         'Cast',
-                        // style: AppStyle.biggestMerriWeather,
                         style: Theme.of(context).textTheme.displayLarge,
                       ),
-                      FutureBuilder(
-                        future: filmFlexApi.getPopularMoviesCast(
-                            context, popularMovie.id.toString()),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          } else if (snapshot.hasError) {
-                            return Text('${snapshot.error}');
-                          } else {
-                            final casts = snapshot.data;
-                            return SizedBox(
+                      // FutureBuilder(
+                      //   future: filmFlexApi.getPopularMoviesCast(
+                      //       context, popularMovie.id.toString()),
+                      //   builder: (context, snapshot) {
+                      //     if (snapshot.connectionState ==
+                      //         ConnectionState.waiting) {
+                      //       return const Center(
+                      //         child: CircularProgressIndicator(),
+                      //       );
+                      //     } else if (snapshot.hasError) {
+                      //       return Text('${snapshot.error}');
+                      //     } else {
+                      //       final casts = snapshot.data;
+                      //       return SizedBox(
+                      //         height: 200.h,
+                      //         width: 360.w,
+                      //         child: ListView.separated(
+                      //           scrollDirection: Axis.horizontal,
+                      //           itemCount: casts!.length,
+                      //           itemBuilder: (context, index) {
+                      //             final popularMovieCast = casts[index];
+                      //             return MovieCastTile(
+                      //                 movieCast: popularMovieCast);
+                      //           },
+                      //           separatorBuilder: (context, index) {
+                      //             return SizedBox(
+                      //               width: 12.w,
+                      //             );
+                      //           },
+                      //         ),
+                      //       );
+                      //     }
+                      //   },
+                      // ),
 
-                              height: 200.h,
-                              width: 360.w,
-                              child: ListView.separated(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: casts!.length,
-                                itemBuilder: (context, index) {
-                                  final popularMovieCast = casts[index];
-                                  return PopularMovieCastTile(
-                                      popularMovieCast: popularMovieCast);
-                                },
-                                separatorBuilder: (context, index) {
-                                  return SizedBox(
-                                    width: 12.w,
-                                  );
-                                },
-                              ),
-                            );
-                          }
+                      movieCast.when(
+                        data: (casts) {
+                          return SizedBox(
+                            height: 200.h,
+                            width: 360.w,
+                            child: ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: casts.length,
+                              itemBuilder: (context, index) {
+                                final movieCast = casts[index];
+                                return MovieCastTile(movieCast: movieCast);
+                              },
+                              separatorBuilder: (context, index) {
+                                return SizedBox(
+                                  width: 12.w,
+                                );
+                              },
+                            ),
+                          );
                         },
-                      )
+                        error: (error, stackTrace) => Center(
+                          child: Text(error.toString()),
+                        ),
+                        loading: () => SizedBox(
+                          height: 200.h,
+                          child: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
+                      ),
                     ],
                   ).paddingOnly(
                       leftPadding: 10.w,
@@ -298,7 +333,6 @@ class PopularMovieDetail extends StatelessWidget {
               ),
             ),
           ),
-
         ],
       ),
     );

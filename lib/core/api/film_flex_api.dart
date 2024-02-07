@@ -2,11 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:filmflex/core/api/api_utils.dart';
 import 'package:filmflex/features/movie/data/models/movie_list.dart';
 import 'package:filmflex/features/movie/data/models/popular_movie_cast.dart';
-import 'package:filmflex/services/message_service/snack_bar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_logger/simple_logger.dart';
 
 import '../constant/constants.dart';
+import '../services/message_service/snack_bar_service.dart';
 import 'api_response.dart';
 
 class FilmFlexApi {
@@ -107,7 +107,7 @@ class FilmFlexApi {
     }
   }
 
-  Future<List<PopularMovieCast>> getPopularMoviesCast(
+  Future<List<MovieCast>> getPopularMoviesCast(
       BuildContext? context, String id) async {
     final response = await get(
       "${AppString.popularMoviesCastEndPoint}/$id/credits",
@@ -119,9 +119,9 @@ class FilmFlexApi {
       context: context,
     );
     if (response?.data['cast'] != null) {
-      final casts = <PopularMovieCast>[];
+      final casts = <MovieCast>[];
       response?.data['cast'].forEach((cast) {
-        casts.add(PopularMovieCast.fromJson(cast));
+        casts.add(MovieCast.fromJson(cast));
       });
       return casts;
     } else {

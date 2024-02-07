@@ -2,13 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:filmflex/core/extensions/extensions.dart';
 import 'package:filmflex/features/movie/data/models/movie_list.dart';
 import 'package:filmflex/features/movie/domain/entities/movie_entity.dart';
-import 'package:filmflex/src/screen/popular_movie_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../core/constant/app_string.dart';
+import '../../../../core/constant/app_string.dart';
+import '../pages/screen.dart';
+import '../providers/movie_provider/string_provider.dart';
 
-class MovieTile extends StatelessWidget {
+class MovieTile extends ConsumerWidget {
   final Movie? movie;
   final bool isPopular;
 
@@ -19,21 +21,21 @@ class MovieTile extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SingleChildScrollView(
       physics: const NeverScrollableScrollPhysics(),
       child: GestureDetector(
         onTap: () {
-          context.push( PopularMovieDetail(popularMovie: movie!), context);
+          context.push(PopularMovieDetail(popularMovie: movie!), context);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-
               height: 212.h,
               width: 143.w,
               decoration:  BoxDecoration(
+                color: Colors.red,
                 borderRadius: BorderRadius.all(
                   Radius.circular(10.w),
                 ),
@@ -59,37 +61,40 @@ class MovieTile extends StatelessWidget {
             ),
             SizedBox(
               width: 150.w,
-              height: 60.h,
+              height: 50.h,
               child: Text(
                 movie?.originalTitle ?? '',
                 textAlign: TextAlign.left,
-                maxLines: 10,
+                maxLines: 3,
                 softWrap: true,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
-            SizedBox(
-              width: 148.w,
-              child: isPopular ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Popularity:',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge?.copyWith(fontSize: 14.sp),
-                  ),
-                  Text(
-                    movie!.popularity!.toStringAsFixed(1).toString(),
-                    style:  Theme.of(context)
-                        .textTheme
-                        .bodyLarge,
-                  ),
-                ],
-              ) : null,
-            )
+            isPopular
+                ? SizedBox(
+                    width: 148.w,
+                    child: isPopular
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Popularity:',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(fontSize: 14.sp),
+                              ),
+                              Text(
+                                movie!.popularity!
+                                    .toStringAsFixed(1)
+                                    .toString(),
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ],
+                          )
+                        : null,
+                  )
+                : Container(),
           ],
         ),
       ),

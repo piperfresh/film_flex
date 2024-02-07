@@ -3,13 +3,13 @@ import 'package:filmflex/features/movie/data/models/popular_movie_cast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../core/constant/app_string.dart';
-import '../../core/constant/ui_helper.dart';
+import '../../../../core/constant/app_string.dart';
+import '../../../../core/constant/ui_helper.dart';
 
-class PopularMovieCastTile extends StatelessWidget {
-  final PopularMovieCast popularMovieCast;
+class MovieCastTile extends StatelessWidget {
+  final MovieCast movieCast;
 
-  const PopularMovieCastTile({super.key, required this.popularMovieCast});
+  const MovieCastTile({super.key, required this.movieCast});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class PopularMovieCastTile extends StatelessWidget {
           child: CachedNetworkImage(
             fit: BoxFit.scaleDown,
             imageUrl:
-                '${AppString.baseImageUrl}w200/${popularMovieCast.profilePath}',
+                '${AppString.baseImageUrl}w200/${movieCast.profilePath}',
             imageBuilder: (context, imageProvider) => Container(
               height: 76.h,
               width: 72.w,
@@ -52,7 +52,7 @@ class PopularMovieCastTile extends StatelessWidget {
           width: 80.w,
           height: 40.h,
           child: Text(
-            popularMovieCast.originalName!,
+            movieCast.originalName!,
             maxLines: 2,
             textAlign: TextAlign.left,
             softWrap: true,

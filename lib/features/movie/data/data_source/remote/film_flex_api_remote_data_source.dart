@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:filmflex/core/resources/data_state.dart';
 // import 'package:filmflex/core/api/flim_flex_api/api_service_repository.dart';
 // import 'package:filmflex/core/resources/data_state.dart';
 import 'package:filmflex/features/movie/data/data_source/remote/film_flex_api_data_source.dart';
+
 // import 'package:filmflex/features/movie/data/models/movie_list.dart';
 // import 'package:filmflex/features/movie/data/models/popular_movie_cast.dart';
 
@@ -127,6 +127,7 @@ import '../../../../../core/constant/app_string.dart';
 //   }
 // }
 
+// class ApiProviderRepositoryImpl implements ApiProviderRepository<ApiResponse> {
 class ApiProviderRepositoryImpl implements ApiProviderRepository<ApiResponse> {
   final dio = Dio();
 
@@ -159,8 +160,9 @@ class ApiProviderRepositoryImpl implements ApiProviderRepository<ApiResponse> {
       if (e.type == DioExceptionType.connectionError ||
           e.type == DioExceptionType.receiveTimeout) {
         // SnackBarService.errorSnackBar(context!, 'Connection error or Receive timeout');
-        // logger.severe('Connection error or Receive timeout');
-        DataFailure(e);
+        log('Connection error or Receive timeout');
+        // DataFailure(e);
+        print('Error : $e');
       } else if (e.response != null) {
         print('Wow: ${e.response?.requestOptions.uri}');
         log('Received error response: ${e.response!.statusCode}');
@@ -187,7 +189,7 @@ class ApiProviderRepositoryImpl implements ApiProviderRepository<ApiResponse> {
           options: Options(headers: headers),
           queryParameters: queryParameter);
       log('Post response to $string \n ${response.data}');
-
+      print('IT IS HAAA $response');
       return ApiUtils.toApiResponse(response);
     } on DioException catch (e) {
       if (e.type == DioExceptionType.connectionError) {

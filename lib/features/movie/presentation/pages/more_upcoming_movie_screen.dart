@@ -1,12 +1,13 @@
 
 import 'package:filmflex/core/api/film_flex_api.dart';
 import 'package:filmflex/core/extensions/extensions.dart';
-import 'package:filmflex/src/screen/popular_movie_detail_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../core/constant/app_style.dart';
-import '../common_widget/more_movie_tile.dart';
+import '../../../../core/constant/app_style.dart';
+import '../widgets/more_movie_tile.dart';
+import 'screen.dart';
 
 class MoreUpcomingMovieScreen extends StatelessWidget {
   MoreUpcomingMovieScreen({super.key});

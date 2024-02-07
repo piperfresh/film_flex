@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:filmflex/core/resources/data_state.dart';
 import 'package:filmflex/features/movie/data/models/movie_list.dart';
 import 'package:filmflex/features/movie/data/models/popular_movie_cast.dart';
 import 'package:filmflex/features/movie/domain/repository/movie_repository.dart';
@@ -78,7 +77,7 @@ class MovieRepositoryImpl implements MovieRepository {
   }
 
   @override
-  Future<List<PopularMovieCast>> getPopularMoviesCast(String id) async {
+  Future<List<MovieCast>> getPopularMoviesCast(String id) async {
     final response = await _apiProviderRepository.get(
       "${AppString.popularMoviesCastEndPoint}/$id/credits",
       headers: {
@@ -89,9 +88,9 @@ class MovieRepositoryImpl implements MovieRepository {
       // context: context,
     );
     if (response?.data['cast'] != null) {
-      final casts = <PopularMovieCast>[];
+      final casts = <MovieCast>[];
       response?.data['cast'].forEach((cast) {
-        casts.add(PopularMovieCast.fromJson(cast));
+        casts.add(MovieCast.fromJson(cast));
       });
       return casts;
     } else {

@@ -1,5 +1,5 @@
-import 'package:filmflex/providers/theme_notifier.dart';
-import 'package:filmflex/src/screen/home_screen.dart';
+import 'package:filmflex/core/theme_notifier.dart';
+import 'package:filmflex/features/movie/presentation/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../core/constant/app_colors.dart';
-import '../../core/constant/app_string.dart';
-import '../../core/constant/app_style.dart';
-import '../../core/constant/ui_helper.dart';
+import '../../../../core/constant/app_colors.dart';
+import '../../../../core/constant/app_string.dart';
+import '../../../../core/constant/app_style.dart';
+import '../../../../core/constant/ui_helper.dart';
 
 class MoreMovieTile extends StatelessWidget {
   final Movie movie;

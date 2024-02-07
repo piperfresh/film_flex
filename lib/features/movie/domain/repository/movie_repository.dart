@@ -1,7 +1,7 @@
 import 'package:filmflex/features/movie/domain/entities/movie_cast_entity.dart';
 import 'package:filmflex/features/movie/domain/entities/movie_entity.dart';
 
-import '../../../../core/resources/data_state.dart';
+
 
 abstract class MovieRepository {
   Future<List<MovieEntity>> getPopularMovie();

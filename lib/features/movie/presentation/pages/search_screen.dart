@@ -3,14 +3,15 @@ import 'dart:async';
 import 'package:filmflex/core/constant/ui_helper.dart';
 import 'package:filmflex/core/extensions/extensions.dart';
 import 'package:filmflex/features/movie/data/models/movie_list.dart';
-import 'package:filmflex/providers/provider.dart';
-import 'package:filmflex/src/common_widget/search_tile.dart';
-import 'package:filmflex/src/screen/popular_movie_detail_screen.dart';
+import 'package:filmflex/features/movie/presentation/providers/movie_provider/ui_provider.dart';
+import 'package:filmflex/features/movie/presentation/widgets/search_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../core/api/film_flex_api.dart';
+import '../../../../core/api/film_flex_api.dart';
+import '../providers/movie_provider/string_provider.dart';
+import 'screen.dart';
 
 final filmFlexApi = FilmFlexApi();
 
@@ -50,7 +51,7 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Consumer(builder: (context, ref, child) {
-          final query = ref.watch(searchQueryProvider);
+          final fetchMovies = ref.watch(fetchMoviesProvider);
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -92,54 +93,55 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
               UiHelper.verticalSmallSpacing,
-              FutureBuilder(
-                future: filmFlexApi.fetchMovies(context, query),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text('${snapshot.error}'),
-                    );
-                  } else {
-                    final searchResults = snapshot.data;
-                    return searchResults!.isNotEmpty
-                        ? Expanded(
-                            child: GridView.builder(
-                              itemCount: searchResults.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3,
-                                      crossAxisSpacing: 5.0,
-                                      mainAxisSpacing: 5.0),
-                              itemBuilder: (context, index) {
-                                final searchResult = searchResults[index];
-                                return GestureDetector(
-                                    onTap: () {
-                                      context.push(PopularMovieDetail(
-                                          popularMovie: searchResult), context);
-                                    },
-                                    child: SearchTile(movie: searchResult));
-                              },
+              fetchMovies.when(
+                data: (data) {
+                  return data.isNotEmpty
+                      ? Expanded(
+                          child: GridView.builder(
+                            itemCount: data.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 5.0,
+                              mainAxisSpacing: 5.0,
                             ),
-                          )
-                        : Expanded(
-                      child: Center(
-                              child: _searchController.text.isNotNullOrEmpty
-                                  ? Text(
-                                      'Search Not Found',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .displayMedium,
-                                    )
-                                  : null,
-                            ),
-                          );
-                  }
+                            itemBuilder: (context, index) {
+                              final searchResult = data[index];
+                              return GestureDetector(
+                                  onTap: () {
+                                    context.push(
+                                        PopularMovieDetail(
+                                            popularMovie: searchResult),
+                                        context);
+                                  },
+                                  child: SearchTile(movie: searchResult));
+                            },
+                          ),
+                        )
+                      : Expanded(
+                          child: Center(
+                            child: _searchController.text.isNotNullOrEmpty
+                                ? Text(
+                                    'Search Not Found',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayMedium,
+                                  )
+                                : null,
+                          ),
+                        );
                 },
-              ),
+                error: (error, stackTrace) => Center(
+                  child: Text(
+                    error.toString(),
+                  ),
+                ),
+                loading: () => const SizedBox(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              )
             ],
           );
         }),

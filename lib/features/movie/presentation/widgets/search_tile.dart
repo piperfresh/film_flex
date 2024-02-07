@@ -3,7 +3,7 @@ import 'package:filmflex/features/movie/data/models/movie_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../core/constant/app_string.dart';
+import '../../../../core/constant/app_string.dart';
 
 
 

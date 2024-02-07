@@ -1,14 +1,16 @@
 
 import 'package:filmflex/core/api/film_flex_api.dart';
 import 'package:filmflex/core/extensions/extensions.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+
+import '../widgets/more_movie_tile.dart';
 import 'screen.dart';
 
-import '../common_widget/more_movie_tile.dart';
-
-class MoreNowShowingMovieScreen extends StatelessWidget {
-  MoreNowShowingMovieScreen({super.key});
+class MorePopularMovieScreen extends StatelessWidget {
+  MorePopularMovieScreen({super.key});
 
   final filmFlexApi = FilmFlexApi();
 
@@ -26,7 +28,7 @@ class MoreNowShowingMovieScreen extends StatelessWidget {
           ).paddingOnly(leftPadding: 0.0),
         ),
         title: Text(
-          'Now Showing',
+          'Popular Movies',
           // style: AppStyle.bigMullish,
           style: Theme.of(context).textTheme.displayMedium,
         ),
@@ -37,7 +39,7 @@ class MoreNowShowingMovieScreen extends StatelessWidget {
       body: Column(
         children: [
           FutureBuilder(
-            future: filmFlexApi.getNowPlayingMovies(context),
+            future: filmFlexApi.getPopularMovie(context),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(

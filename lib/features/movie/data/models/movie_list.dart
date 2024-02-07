@@ -1,22 +1,38 @@
 import 'package:filmflex/features/movie/domain/entities/movie_entity.dart';
 
-class Movie extends MovieEntity{
-  Movie({
-    super.adult,
-    super.backdropPath,
-    super.id,
-    super.genreIds,
-    super.originalLanguage,
-    super.originalTitle,
-    super.overview,
-    super.popularity,
-    super.posterPath,
-    super.releaseDate,
-    super.title,
-    super.video,
-    super.voteAverage,
-    super.voteCount
-});
+class Movie extends MovieEntity {
+  Movie(
+      {bool? adult,
+      String? backdropPath,
+      int? id,
+      List<int>? genreIds,
+      String? originalLanguage,
+      String? originalTitle,
+      String? overview,
+      double? popularity,
+      String? posterPath,
+      String? releaseDate,
+      String? title,
+      bool? video,
+      double? voteAverage,
+      int? voteCount})
+      : super(
+          adult: adult,
+          title: title,
+          originalLanguage: originalLanguage,
+          originalTitle: originalTitle,
+          id: id,
+          overview: overview,
+          popularity: popularity,
+          posterPath: posterPath,
+          releaseDate: releaseDate,
+          backdropPath: backdropPath,
+          genreIds: genreIds,
+          video: video,
+          voteAverage: voteAverage,
+          voteCount: voteCount,
+        );
+
   // bool? adult;
   // String? backdropPath;
   // List<int>? genreIds;
@@ -82,6 +98,25 @@ class Movie extends MovieEntity{
     data['vote_average'] = voteAverage;
     data['vote_count'] = voteCount;
     return data;
+  }
+
+  factory Movie.fromEntity(MovieEntity entity) {
+    return Movie(
+      adult: entity.adult,
+      backdropPath: entity.backdropPath,
+      genreIds: entity.genreIds,
+      id: entity.id,
+      originalLanguage: entity.originalLanguage,
+      originalTitle: entity.originalTitle,
+      overview: entity.overview,
+      popularity: entity.popularity,
+      posterPath: entity.posterPath,
+      releaseDate: entity.releaseDate,
+      title: entity.title,
+      video: entity.video,
+      voteAverage: entity.voteAverage,
+      voteCount: entity.voteCount,
+    );
   }
 }
 
