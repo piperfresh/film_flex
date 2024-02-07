@@ -9,11 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../core/api/film_flex_api.dart';
 import '../providers/movie_provider/string_provider.dart';
 import 'screen.dart';
-
-final filmFlexApi = FilmFlexApi();
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -67,10 +64,12 @@ class _SearchScreenState extends State<SearchScreen> {
                     if (_debounce?.isActive ?? false) {
                       _debounce?.cancel();
                     }
-                    _debounce = Timer(const Duration(milliseconds: 1000), () {
-                      ref.read(searchQueryProvider.notifier).state = value;
-                      filmFlexApi.fetchMovies(context, value);
-                    });
+                    _debounce = Timer(
+                      const Duration(milliseconds: 1000),
+                      () {
+                        ref.read(searchQueryProvider.notifier).state = value;
+                      },
+                    );
                   },
                   decoration: InputDecoration(
                     hintText: 'Search',
@@ -109,13 +108,12 @@ class _SearchScreenState extends State<SearchScreen> {
                             itemBuilder: (context, index) {
                               final searchResult = data[index];
                               return GestureDetector(
-                                  onTap: () {
-                                    context.push(
-                                        PopularMovieDetail(
-                                            popularMovie: searchResult),
-                                        context);
-                                  },
-                                  child: SearchTile(movie: searchResult));
+                                onTap: () {
+                                  context.push(MovieDetail(movie: searchResult),
+                                      context);
+                                },
+                                child: SearchTile(movie: searchResult),
+                              );
                             },
                           ),
                         )

@@ -21,7 +21,7 @@ class NowPlayingMovieTile extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       child: GestureDetector(
         onTap: () {
-          context.push(PopularMovieDetail(popularMovie: popularMovie!), context);
+          context.push(MovieDetail(movie: popularMovie!), context);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

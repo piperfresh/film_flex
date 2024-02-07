@@ -29,10 +29,14 @@ class SearchTile extends StatelessWidget {
           width: 143,
           height: 200,
           decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10),
-              ),
-              image: DecorationImage(image: imageProvider, fit: BoxFit.fill)),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10),
+            ),
+            image: DecorationImage(
+              image: imageProvider,
+              fit: BoxFit.fill,
+            ),
+          ),
         ),
         placeholder: (context, url) =>
             const Center(child: CircularProgressIndicator()),

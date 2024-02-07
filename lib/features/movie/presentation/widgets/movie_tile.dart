@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constant/app_string.dart';
 import '../pages/screen.dart';
-import '../providers/movie_provider/string_provider.dart';
+
 
 class MovieTile extends ConsumerWidget {
   final Movie? movie;
@@ -26,7 +26,7 @@ class MovieTile extends ConsumerWidget {
       physics: const NeverScrollableScrollPhysics(),
       child: GestureDetector(
         onTap: () {
-          context.push(PopularMovieDetail(popularMovie: movie!), context);
+          context.push(MovieDetail(movie: movie!), context);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +35,6 @@ class MovieTile extends ConsumerWidget {
               height: 212.h,
               width: 143.w,
               decoration:  BoxDecoration(
-                color: Colors.red,
                 borderRadius: BorderRadius.all(
                   Radius.circular(10.w),
                 ),

@@ -5,17 +5,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../core/api/film_flex_api.dart';
+
 import '../providers/movie_provider/ui_provider.dart';
 import '../widgets/common_widget.dart';
-import 'more_popular_movie_screen.dart';
-import 'more_upcoming_movie_screen.dart';
 import 'screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   HomeScreen({super.key});
 
-  final filmFlexApi = FilmFlexApi();
+  // final filmFlexApi = FilmFlexApi();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

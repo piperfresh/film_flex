@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:filmflex/core/api/film_flex_api.dart';
 import 'package:filmflex/core/extensions/extensions.dart';
 import 'package:filmflex/features/movie/data/models/movie_list.dart';
 import 'package:filmflex/features/movie/presentation/widgets/movie_cast_tile.dart';
@@ -16,17 +15,17 @@ import '../providers/movie_provider/string_provider.dart';
 import '../providers/movie_provider/ui_provider.dart';
 import '../widgets/details_column_widget.dart';
 
-class PopularMovieDetail extends ConsumerStatefulWidget {
-  final Movie popularMovie;
+class MovieDetail extends ConsumerStatefulWidget {
+  final Movie movie;
 
-  PopularMovieDetail({super.key, required this.popularMovie});
+  const MovieDetail({super.key, required this.movie});
 
   @override
-  ConsumerState<PopularMovieDetail> createState() => _PopularMovieDetailState();
+  ConsumerState<MovieDetail> createState() => _PopularMovieDetailState();
 }
 
-class _PopularMovieDetailState extends ConsumerState<PopularMovieDetail> {
-  final filmFlexApi = FilmFlexApi();
+class _PopularMovieDetailState extends ConsumerState<MovieDetail> {
+
 
   final List<Map<int, String>> genresIdDetails = const [
     {12: 'ADVENTURE'},
@@ -57,14 +56,14 @@ class _PopularMovieDetailState extends ConsumerState<PopularMovieDetail> {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       ref.read(movieCastIdProvider.notifier).state =
-          widget.popularMovie.id.toString();
+          widget.movie.id.toString();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final movieCast = ref.watch(movieCastProvider);
-    List<String> genresNames = widget.popularMovie.genreIds!.map((id) {
+    List<String> genresNames = widget.movie.genreIds!.map((id) {
       Map<int, String> genre = genresIdDetails.firstWhere(
         (element) => element.keys.first == id,
         orElse: () => {0: 'UNKNOWN'},
@@ -83,7 +82,7 @@ class _PopularMovieDetailState extends ConsumerState<PopularMovieDetail> {
               child: CachedNetworkImage(
                 fit: BoxFit.fill,
                 imageUrl:
-                    'https://image.tmdb.org/t/p/w500/${widget.popularMovie.backdropPath}',
+                    'https://image.tmdb.org/t/p/w500/${widget.movie.backdropPath}',
                 imageBuilder: (context, imageProvider) => Container(
                   width: double.infinity.w,
                   height: 280.h,
@@ -155,7 +154,7 @@ class _PopularMovieDetailState extends ConsumerState<PopularMovieDetail> {
                             width: 250.w,
                             height: 92.h,
                             child: Text(
-                              widget.popularMovie.originalTitle ?? '',
+                              widget.movie.originalTitle ?? '',
                               textAlign: TextAlign.left,
                               maxLines: 10,
                               softWrap: true,
@@ -173,7 +172,7 @@ class _PopularMovieDetailState extends ConsumerState<PopularMovieDetail> {
                               // ?.copyWith(color: AppColors.greyColor),
                               ),
                           Text(
-                            widget.popularMovie.popularity!
+                            widget.movie.popularity!
                                 .toStringAsFixed(2)
                                 .toString(),
                             style: Theme.of(context).textTheme.bodyMedium,
@@ -186,7 +185,7 @@ class _PopularMovieDetailState extends ConsumerState<PopularMovieDetail> {
                           SvgPicture.asset('assets/icons/Star.svg'),
                           UiHelper.horizontalSmallestSpacing,
                           Text(
-                            '${widget.popularMovie.voteAverage!.toStringAsFixed(1)}/10 TMDB',
+                            '${widget.movie.voteAverage!.toStringAsFixed(1)}/10 TMDB',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium
@@ -224,20 +223,20 @@ class _PopularMovieDetailState extends ConsumerState<PopularMovieDetail> {
                         children: [
                           DetailColumnWidget(
                             firstChild: 'Language',
-                            secondChild: widget.popularMovie.originalLanguage!,
-                            popularMovie: widget.popularMovie,
+                            secondChild: widget.movie.originalLanguage!,
+                            popularMovie: widget.movie,
                           ),
                           DetailColumnWidget(
                             firstChild: 'Rating',
-                            secondChild: widget.popularMovie.adult == false
+                            secondChild: widget.movie.adult == false
                                 ? 'G'
                                 : 'PG - 13',
-                            popularMovie: widget.popularMovie,
+                            popularMovie: widget.movie,
                           ),
                           DetailColumnWidget(
                             firstChild: 'Release Date',
-                            secondChild: widget.popularMovie.releaseDate!,
-                            popularMovie: widget.popularMovie,
+                            secondChild: widget.movie.releaseDate!,
+                            popularMovie: widget.movie,
                           ),
                         ],
                       ),
@@ -248,7 +247,7 @@ class _PopularMovieDetailState extends ConsumerState<PopularMovieDetail> {
                       ),
                       UiHelper.verticalSmallestSpacing,
                       Text(
-                        widget.popularMovie.overview!,
+                        widget.movie.overview!,
                         style: AppStyle.smallMullish.copyWith(
                           color: AppColors.greyColor,
                         ),
@@ -258,45 +257,10 @@ class _PopularMovieDetailState extends ConsumerState<PopularMovieDetail> {
                         'Cast',
                         style: Theme.of(context).textTheme.displayLarge,
                       ),
-                      // FutureBuilder(
-                      //   future: filmFlexApi.getPopularMoviesCast(
-                      //       context, popularMovie.id.toString()),
-                      //   builder: (context, snapshot) {
-                      //     if (snapshot.connectionState ==
-                      //         ConnectionState.waiting) {
-                      //       return const Center(
-                      //         child: CircularProgressIndicator(),
-                      //       );
-                      //     } else if (snapshot.hasError) {
-                      //       return Text('${snapshot.error}');
-                      //     } else {
-                      //       final casts = snapshot.data;
-                      //       return SizedBox(
-                      //         height: 200.h,
-                      //         width: 360.w,
-                      //         child: ListView.separated(
-                      //           scrollDirection: Axis.horizontal,
-                      //           itemCount: casts!.length,
-                      //           itemBuilder: (context, index) {
-                      //             final popularMovieCast = casts[index];
-                      //             return MovieCastTile(
-                      //                 movieCast: popularMovieCast);
-                      //           },
-                      //           separatorBuilder: (context, index) {
-                      //             return SizedBox(
-                      //               width: 12.w,
-                      //             );
-                      //           },
-                      //         ),
-                      //       );
-                      //     }
-                      //   },
-                      // ),
-
                       movieCast.when(
                         data: (casts) {
                           return SizedBox(
-                            height: 200.h,
+                            height: 230.h,
                             width: 360.w,
                             child: ListView.separated(
                               scrollDirection: Axis.horizontal,
