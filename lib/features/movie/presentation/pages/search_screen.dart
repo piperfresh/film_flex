@@ -41,6 +41,7 @@ class _SearchScreenState extends State<SearchScreen> {
           child: SvgPicture.asset(
             'Back2'.svg,
             fit: BoxFit.scaleDown,
+            colorFilter: ColorFilter.mode(Theme.of(context).textTheme.displayLarge!.color!, BlendMode.srcIn),
           ),
         ),
         title: Text(
