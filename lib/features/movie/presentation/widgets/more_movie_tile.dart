@@ -13,17 +13,8 @@ import '../../../../core/constant/ui_helper.dart';
 class MoreMovieTile extends StatelessWidget {
   final Movie movie;
 
-  MoreMovieTile({super.key, required this.movie});
-
-  final List colorTiles = [
-    Colors.grey,
-    Colors.blue,
-    Colors.green,
-    Colors.cyan,
-    Colors.blueAccent,
-    Colors.pinkAccent,
-  ];
-
+  const MoreMovieTile({super.key, required this.movie});
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,11 +37,12 @@ class MoreMovieTile extends StatelessWidget {
                 width: 100.w,
                 height: 80.h,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10.w),
-                    ),
-                    image: DecorationImage(
-                        image: imageProvider, fit: BoxFit.fill)),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10.w),
+                  ),
+                  image:
+                      DecorationImage(image: imageProvider, fit: BoxFit.fill),
+                ),
               ),
               placeholder: (context, url) =>
                   const Center(child: CircularProgressIndicator()),

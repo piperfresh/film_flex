@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constant/app_colors.dart';
-import '../../../../core/constant/app_style.dart';
-
 class ActionButton extends StatelessWidget {
   final String text;
   final void Function() onPressed;
@@ -20,17 +17,20 @@ class ActionButton extends StatelessWidget {
       minWidth: 25,
       onPressed: onPressed,
       elevation: 20,
-      shape: const RoundedRectangleBorder(
+      shape: RoundedRectangleBorder(
         side: BorderSide(
-          color: AppColors.borderColor,
+          color: Theme.of(context).textTheme.displayLarge!.color!,
         ),
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(22),
         ),
       ),
       child: Text(
         text,
-        style: AppStyle.smallestMullish,
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: Theme.of(context).textTheme.displayLarge!.color,
+              fontWeight: FontWeight.w900,
+            ),
       ),
     );
   }
