@@ -281,7 +281,8 @@ class _PopularMovieDetailState extends ConsumerState<MovieDetail> {
                           child: Text(error.toString()),
                         ),
                         loading: () => SizedBox(
-                          height: 200.h,
+                          height: 230.h,
+                          width: 360.w,
                           child: const Center(
                             child: CircularProgressIndicator(),
                           ),

@@ -34,7 +34,7 @@ class FilmFlexTheme {
       color: AppColors.primaryColor,
     ),
   );
-
+ /// Dark Text Mode
   static TextTheme darkTextTheme = TextTheme(
    bodySmall: GoogleFonts.mulish(
     fontWeight: FontWeight.w400,
